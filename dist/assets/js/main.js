@@ -10,24 +10,24 @@ const DOMstrings = {
 // Framework
 var F = {
     Get: {
-		byId: id => document.getElementById(id),
+        byId: id => document.getElementById(id),
         byName: name => document.getElementsByName(name),
         byQuery: query => document.querySelector(query),
         byQueryAll: queryAll => document.querySelectorAll(queryAll),
     },
     Event: {
-		add: (type, elem, func) => elem.addEventListener(type, func),
+        add: (type, elem, func) => elem.addEventListener(type, func),
     },
 };
 
 // Dropdowns
-F.Get.byQueryAll(DOMstrings.dropDown).forEach(dropdown => {
-    F.Event.add('click', dropdown, event => {
+F.Get.byQueryAll(DOMstrings.dropDown).forEach((dropdown) => {
+    F.Event.add('click', dropdown, (event) => {
         event.target.parentNode.classList.toggle('opened')
     })
 })
 
-F.Event.add('mouseup', document, event => {
+F.Event.add('mouseup', document, (event) => {
     if (!event.target.parentNode.classList.contains('opened')) {
         for (let  dropdown of document.querySelectorAll(DOMstrings.dropDown)) {
             dropdown.classList.remove('opened')
