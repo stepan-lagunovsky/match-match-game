@@ -1,0 +1,89 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Boilerplate using Parcel</title>
+    </head>
+    <body>
+    <!-- Application -->
+    <div class="app">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+
+            <!-- Navigation -->
+            <div class="navigation">
+                <div class="controls">
+                <div class="nav-item">
+                    <div class="dropdown">
+                    <button>Choose Card Skirt</button>
+                    <div class="radio-set">
+                        <label>
+                        <input type="radio" checked name="cardBack" value="blue">
+                        <span>
+                            Blue
+                            <img src="img/cards/back/blue_back.png" width="50px">
+                        </span>
+                        </label>
+                        <label>
+                        <input type="radio" name="cardBack" value="red">
+                        <span>
+                            Red
+                            <img src="img/cards/back/red_back.png" width="50px">
+                        </span>
+                        </label>
+                    </div>
+                    </div>
+                </div>
+                <div class="nav-item">
+                    <div class="dropdown">
+                    <button>Choose Difficulty</button>
+                    <div class="radio-set">
+                        <label>
+                        <input type="radio" checked name="difficulty" value="10">
+                        <span>Easy (5x2)</span>
+                        </label>
+                        <label>
+                        <input type="radio" name="difficulty" value="18">
+                        <span>Medium (6x3)</span>
+                        </label>
+                        <label>
+                        <input type="radio" name="difficulty" value="24">
+                        <span>Hard (8x3)</span>
+                        </label>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="nav-item">
+                    <a class="start-new-game" href="/">New Game</a>
+                    <button id="startButton" class="new-game">Start Game</button>
+                    <div class="play-pause-checkbox">
+                    <input id="playPause" type="checkbox">
+                    <label id="playPauseLabel" for="playPause">Pause</label>
+                    </div>
+                </div>
+                </div>
+                <div class="timer-box">
+                <div class="timer">
+                    <div id="timer" class="timer-screen"></div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </header>
+
+        <!-- Cardboard -->
+        <section class="wr-card-board">
+            <div class="container">
+            <div class="cards-table">
+                <div id="cardBoard" class="solitaire">
+                </div>
+            </div>
+            </div>
+        </section>
+        </div>
+        <script src="js/script.js"></script>
+    </body>
+</html>

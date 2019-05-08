@@ -1,0 +1,16 @@
+.app {
+	min-width: 320px;
+	overflow-x: hidden;
+}
+
+section {
+
+	&.wr {
+
+		&-our_advantages {
+			background: $brand_bg;
+			padding: 50px 0;
+			@include respond-to(md) {};
+		}
+	}
+}
