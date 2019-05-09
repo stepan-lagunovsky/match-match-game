@@ -30,6 +30,8 @@ const newGameButton = findById('newGameButton');
 const processControls = findByQuery('.process-controls');
 const difficultyControls = findByQuery('.difficulty-controls');
 const newGameControls = findByQuery('.new-game-controls');
+const timerBox = findByQuery('.timer-box');
+const backDrop = findByQuery('.backdrop');
 
 listenEvent(newGameButton, 'click', () => {
   window.location.reload();
@@ -82,8 +84,10 @@ listenEvent(playPause, 'change', event => {
 
   if (checked) {
     timer.pause();
+    backDrop.classList.remove('hidden');
   } else {
     timer.resume();
+    backDrop.classList.add('hidden');
   }
 });
 
@@ -159,6 +163,7 @@ listenEvent(startGameButton, 'click', () => {
   newGameControls.classList.add('hidden');
   processControls.classList.remove('hidden');
   difficultyControls.classList.add('hidden');
+  timerBox.classList.remove('hidden');
   rulesBox.classList.add('hidden');
 });
 

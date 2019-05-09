@@ -56,19 +56,25 @@
             <button id="startGameButton" class="start-game">Start Game</button>
           </div>
           <div class="control-item process-controls hidden">
-            <button id="newGameButton" class="new-game">New Game</button>
             <div class="play-pause-checkbox">
               <input id="playPause" type="checkbox">
               <label id="playPauseLabel" for="playPause">Pause</label>
             </div>
+            <button id="newGameButton" class="new-game">New Game</button>
+            <!-- Backdrop -->
+            <div class="backdrop hidden">
+              Paused ;)
+            </div>
           </div>
         </div>
-        <div class="timer-box">
+        <div class="timer-box hidden">
           <div class="timer">
             <div id="timer" class="timer-screen"></div>
           </div>
         </div>
       </div>
+
+      <!-- Side-drawer -->
       <div class="side-drawer">
         <div class="rules-box drawer-content">
           <div class="description-box">
