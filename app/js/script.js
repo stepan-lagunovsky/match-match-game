@@ -1,7 +1,7 @@
 import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.png';
 import redBack from '../img/cards/back/red_back.png';
-import cardImages from './cards';
+import { cardImages } from './cards';
 
 require('babel-core/register');
 require('babel-polyfill');
@@ -138,7 +138,7 @@ const drawCards = shuffledArray => {
   shuffledArray.forEach((currentFront, index) => {
     cardBoard.innerHTML += `
       <div class="card-box">
-        <div class="card" id="card_${index}" onclick="cardClickHandler('card_${index}', '${currentFront}')">
+        <div class="card" id="card_${index}" data-card-front='${currentFront}'>
           <div class="card__side card__side--front">
             <div class="card__picture card__picture--front">
               <img alt class="imageOfTheCard" src="${gameOptions.cardBack}"/>
@@ -217,3 +217,12 @@ const cardClickHandler = (id, value) => {
     }, 800);
   }
 };
+
+listenEvent(cardBoard, 'click', event => {
+  const cardId = event.target.parentNode.parentNode.parentNode.id;
+  const cardFront = event.target.parentNode.parentNode.parentNode.getAttribute(
+    'data-card-front'
+  );
+
+  cardClickHandler(cardId, cardFront);
+});

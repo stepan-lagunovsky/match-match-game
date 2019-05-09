@@ -317,11 +317,11 @@ button.new-game {
       }
     }
 
-    &.rotateCardNow &__side--front {
+    &.rotateCardNow .card__side--front {
       transform: rotateY(-180deg);
     }
 
-    &.rotateCardNow &__side--back {
+    &.rotateCardNow .card__side--back {
       transform: rotateY(0);
     }
 
