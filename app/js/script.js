@@ -6,6 +6,7 @@ import cardImages from './cards';
 require('babel-core/register');
 require('babel-polyfill');
 
+const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
 const findById = id => document.getElementById(id);
 const findByName = name => document.getElementsByName(name);
@@ -21,8 +22,18 @@ const playPause = findById('playPause');
 const playPauseLabel = findById('playPauseLabel');
 const difficultyRadio = findByName('difficulty');
 const cardBackRadio = findByName('cardBack');
-const startButton = findById('startButton');
 const cardBoard = findById('cardBoard');
+const rulesBox = findByQuery('.rules-box');
+const congratsBox = findByQuery('.congrats-box');
+const startGameButton = findById('startGameButton');
+const newGameButton = findById('newGameButton');
+const processControls = findByQuery('.process-controls');
+const difficultyControls = findByQuery('.difficulty-controls');
+const newGameControls = findByQuery('.new-game-controls');
+
+listenEvent(newGameButton, 'click', () => {
+  window.location.reload();
+});
 
 // Dropdowns
 listenEventAll(dropdowns, 'click', event => {
@@ -102,7 +113,7 @@ const setBoardGrid = total => {
     colsNumber = 5;
   }
 
-  cardBoard.style.gridTemplateColumns = `repeat(${colsNumber}, 150px)`;
+  cardBoard.style.gridTemplateColumns = `repeat(${colsNumber}, 1fr)`;
 };
 
 // Shuffle cards
@@ -141,11 +152,14 @@ const drawCards = shuffledArray => {
 };
 
 // Start game
-listenEvent(startButton, 'click', () => {
+listenEvent(startGameButton, 'click', () => {
   setBoardGrid(gameOptions.cardsTotal);
   prepareAndSetCards(gameOptions.cardsTotal);
   drawCards(gameOptions.images);
-  startButton.remove();
+  newGameControls.classList.add('hidden');
+  processControls.classList.remove('hidden');
+  difficultyControls.classList.add('hidden');
+  rulesBox.classList.add('hidden');
 });
 
 const openCard = id => {

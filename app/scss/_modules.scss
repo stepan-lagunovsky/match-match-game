@@ -1,50 +1,37 @@
-@import url('https://fonts.googleapis.com/css?family=Schoolbell');
-
-body {
-  min-height: 100vh;
-  background: ivory;
-
-  .app {
-    min-height: 100vh;
-  }
-
-  * {
-    font-family: 'Schoolbell', cursive;
-  }
+h1 {
+  @include font-type($schoolBellReg, $light, 36px, 42px, 1px);
+  margin-bottom: 40px;
+  font-weight: bold;
+  text-align: center;
 }
 
-/*********************************/
-/************* Helpers ***********/
-/*********************************/
-.container {
-  width: 95%;
-  margin: 0 auto;
+h2 {
+  @include font-type($schoolBellReg, $light, 28px, 34px, 1px);
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-/*********************************/
-/************ Buttons ************/
-/*********************************/
+// Buttons
 .buttonStyled {
-  background: url(../img/dropdown-background.jpg) no-repeat 100% 100%;
+  @include font-type($schoolBellReg, $brand, 18px, 24px, 0px);
+  background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
   outline: none;
-  border: none;
-  height: 25px;
   margin: 0;
-  padding: 0;
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
   cursor: pointer;
   height: 50px;
-  color: navajowhite;
-  box-shadow: 0px 10px 15px 0px rgba(1, 1, 1, .5);
-  border: 1px solid rgba(222, 222, 222, .5);
+  box-shadow: 0 10px 15px 0 rgba(1, 1, 1, 0.5);
+  border: 1px solid rgba(222, 222, 222, 0.5);
   text-transform: uppercase;
   font-size: 18px;
   padding: 0 20px;
   position: relative;
-  min-width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  min-width: 120px;
+  width: 100%;
 
   &:disabled {
     opacity: 0.5;
@@ -52,22 +39,20 @@ body {
   }
 
   &:hover {
-    box-shadow: 0px 10px 15px 0px rgba(1, 1, 1, .8);
+    box-shadow: 0 10px 15px 0 rgba(1, 1, 1, 0.8);
     opacity: .8;
   }
+}
+
+button.start-game {
+  @extend .buttonStyled;
 }
 
 button.new-game {
   @extend .buttonStyled;
 }
 
-a.start-new-game {
-  @extend .buttonStyled;
-}
-
-/*********************************/
-/************* Inputs ************/
-/*********************************/
+// Inputs
 .play-pause-checkbox {
   input {
     display: none;
@@ -77,162 +62,96 @@ a.start-new-game {
       @extend .buttonStyled;
     }
     &:checked + label {
-      opacity: 0.6;
+      opacity: .6;
     }
   }
 }
 
-/*********************************/
-/********** Typography ***********/
-/*********************************/
-h1 {
-  @include font-type($serif_bld, $dark, 36px, 42px, 0px);
-}
+.side-drawer {
+  top: 100%;
+  position: absolute;
+  background: rgba(1, 1, 1, .8);
+  box-shadow: 0 33px 40px 0 $black;
+  width: calc(100% - 80px);
 
-p {
-  @include font-type($sans_reg, $dark, 14px, 20px, 0px);
-}
-
-/*********************************/
-/************* Links *************/
-/*********************************/
-
-/*************************************/
-/*********** Same blocks *************/
-/*************************************/
-
-/*************************************/
-/*********** Sections ****************/
-/*************************************/
-
-.footer {
-  background: $brand_bg;
-}
-
-$color-secondary-light: #ffb900;
-$color-secondary-dark: #ff7730;
-
-$color-tertiary-light: #2998ff;
-$color-tertiary-dark: #5643fa;
-
-$color-white: #fff;
-$color-black: black;
-
-.card {
-  perspective: 150rem;
-  position: relative;
-  width: 100px;
-  height: 250px;
-  cursor: pointer;
-
-  &__side {
-    background-color: #fff;
-    color: #fff;
-    font-size: 2rem;
-
-    height: 250px;
-    transition: all .8s ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    backface-visibility: hidden;
-    border-radius: 8px;
-    box-shadow: 7px 10px 9px -6px black;
-
-    &--front {
-      background-color: $color-white;
-    }
-
-    &--back {
-      transform: rotateY(180deg);
-
-      &-1 {
-        background-image: linear-gradient(to right bottom, $color-secondary-light, $color-secondary-dark);
-      }
-    }
-  }
-
-  &.rotateCardNow &__side--front {
-    transform: rotateY(-180deg);
-  }
-
-  &.rotateCardNow &__side--back {
-    transform: rotateY(0);
-  }
-
-  &__picture {
-    background-size: cover;
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-
-    img {
-      width: 100%;
-      height: 100%;
-      border-radius: 8px;
-    }
-  }
-}
-
-.wr-card-board {
-  margin-top: 25px;
-
-  .cards-table {
-    perspective: 2000px;
-    display: flex;
-    justify-content: center;
-    min-height: 950px;
-    align-items: center;
-  }
-
-  .solitaire {
-    display: grid;
-    grid-gap: 20px 20px;
-    grid-template-columns: 150px 150px 150px 150px 150px 150px;
-    transform: rotateX(50deg) skew(1deg);
-    background: url(../img/table.jpg) no-repeat center center / cover;
-    padding: 50px 100px;
-    box-shadow: 0px 23px 30px 0px black;
-
-    .card-box {
-      height: 250px;
-
-      .card {
-        width: 100%;
-      }
-    }
-  }
-}
-
-.header {
-  background: url(../img/table.jpg) no-repeat center center / cover;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-shadow: 0px 5px 10px 0px black;
-  z-index: 1;
-
-  .navigation {
+  .drawer-content {
     display: flex;
     justify-content: flex-start;
-    flex-wrap: wrap;
-    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+    transition: max-height ease-in-out .4s;
+    max-height: 100vh;
+    border: 2px solid $black;
+
+    &.hidden {
+      max-height: 0;
+      border: none;
+    }
+
+    .description-box {
+      padding: 50px;
+    }
   }
+}
+
+.rules-box {
+  ul {
+    li {
+      margin-bottom: 10px;
+
+      span {
+        @include font-type($schoolBellReg, $light, 18px, 24px, 0px);
+      }
+    }
+  }
+}
+
+.congrats-box {
+
+}
+
+.navigation {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 5px 10px 0 $black;
+  padding: 0 20px;
 
   .controls {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
     padding: 5px 0;
 
-    .nav-item {
+    .control-item {
       margin: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
 
-      &:last-child {
-        margin-left: auto;
+      &.hidden {
+        display: none;
+      }
+
+      &.difficulty-controls {
+        width: 70%;
+      }
+
+      &.new-game-controls {
+        width: 15%;
+      }
+
+      &.process-controls {
+        width: 100%;
+
+        button {
+          max-width: 350px;
+        }
       }
     }
   }
@@ -242,64 +161,146 @@ $color-black: black;
     display: flex;
     justify-content: center;
     width: 100%;
+    position: absolute;
+    top: calc(100% + 40px);
+  }
+}
+
+.dropdown {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  button {
+    @extend .buttonStyled;
   }
 
-  .dropdown {
-    width: 400px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-
+  &.opened {
     button {
-      @extend .buttonStyled;
-    }
+      opacity: .8;
 
-    &.opened {
-      button {
-        opacity: .8;
-
-        &:hover {
-          opacity: 1;
-        }
-      }
-
-      .radio-set {
-        display: block;
+      &:hover {
+        opacity: 1;
       }
     }
 
     .radio-set {
-      background: url(../img/dropdown-background.jpg) top center no-repeat / cover;
+      display: block;
+    }
+  }
+
+  .radio-set {
+    background: url('../img/dropdown-background.jpg') top center no-repeat /
+          cover;
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    box-shadow: 0 23px 30px 0 $black;
+
+    input[type='radio'] {
       display: none;
+
+      & + span {
+        display: block;
+        padding: 25px 20px;
+        color: navajowhite;
+        font-size: 31px;
+        text-transform: uppercase;
+        text-align: right;
+        font-weight: bolder;
+        transition: all ease-in-out .2s;
+
+        &:hover {
+          background: linear-gradient(
+              to right,
+              rgba(0, 0, 0, 0) 25%,
+              rgba(0, 0, 0, .43) 89%,
+              rgba(0, 0, 0, .43) 98%,
+              rgba(0, 0, 0, 1) 100%
+          );
+          opacity: .7;
+        }
+      }
+
+      &:checked + span {
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, .63) 89%,
+            rgba(0, 0, 0, .63) 98%,
+            rgba(0, 0, 0, 1) 100%
+        );
+      }
+    }
+  }
+}
+
+.cards-table {
+  perspective: 2000px;
+
+  .solitaire {
+    box-sizing: border-box;
+    display: grid;
+    grid-gap: 20px 20px;
+    transform: rotateX(50deg) skew(1deg);
+    background: url('../img/table.jpg') no-repeat center center / cover;
+    padding: 50px;
+    box-shadow: 0 23px 30px 0 $black;
+    width: 100%;
+    min-width: 940px;
+    min-height: 620px;
+    align-items: center;
+  }
+}
+
+.card-box {
+  height: 250px;
+  width: 150px;
+
+  .card {
+    perspective: 150rem;
+    position: relative;
+    width: 100%;
+    height: 250px;
+    cursor: pointer;
+
+    &__side {
+      height: 250px;
+      transition: all .8s ease;
       position: absolute;
+      top: 0;
       left: 0;
-      top: 100%;
       width: 100%;
-      box-shadow: 0px 23px 30px 0px black;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      box-shadow: 7px 10px 9px -6px $black;
 
-      input[type="radio"] {
-        display: none;
+      &--back {
+        transform: rotateY(180deg);
+      }
+    }
 
-        & + span {
-          display: block;
-          text-align: center;
-          padding: 32px 20px;
-          color: navajowhite;
-          font-size: 31px;
-          text-transform: uppercase;
-          text-align: right;
-          font-weight: bolder;
-          transition: all ease-in-out .2s;
+    &.rotateCardNow &__side--front {
+      transform: rotateY(-180deg);
+    }
 
-          &:hover {
-            background: linear-gradient(to right, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.43) 89%, rgba(0, 0, 0, 0.43) 98%, rgba(0, 0, 0, 1) 100%);
-            opacity: .7;
-          }
-        }
+    &.rotateCardNow &__side--back {
+      transform: rotateY(0);
+    }
 
-        &:checked + span {
-          background: linear-gradient(to right, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0.63) 89%, rgba(0, 0, 0, 0.63) 98%, rgba(0, 0, 0, 1) 100%);
-        }
+    &__picture {
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 10px;
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
       }
     }
   }
@@ -315,7 +316,7 @@ $color-black: black;
 }
 
 .logo {
-  background: url(../img/logo.jpg) center center no-repeat / cover;
+  background: url('../img/logo.jpg') center center no-repeat / cover;
   width: 50px;
   height: 50px;
   transform: rotate(154deg);
@@ -327,6 +328,6 @@ $color-black: black;
   }
 }
 
-input[type="button"] {
+input[type='button'] {
   @extend .buttonStyled;
 }

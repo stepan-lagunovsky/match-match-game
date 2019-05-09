@@ -1,80 +1,72 @@
-// Используй это миксин для всего конфига!
-@mixin font-type($font-family, $color, $font-size, $line-height, $letter-spacing) {
-	font-family: $font-family;
-	color: $color;
-	font-size: $font-size;
-	line-height: $line-height;
-	letter-spacing: $letter-spacing;
+@mixin font-type(
+  $font-family,
+  $color,
+  $font-size,
+  $line-height,
+  $letter-spacing
+) {
+  font-family: $font-family;
+  color: $color;
+  font-size: $font-size;
+  line-height: $line-height;
+  letter-spacing: $letter-spacing;
 }
 
 //Fonts
 @mixin font-face($folder, $file, $font-family) {
-
   @font-face {
     font-family: $font-family;
     src: url('../fonts/' + $folder + '/' + $file + '.eot');
     src: url('../fonts/' + $folder + '/' + $file + '.eot') format('embedded-opentype'),
     url('../fonts/' + $folder + '/' + $file + '.woff2') format('woff2'),
     url('../fonts/' + $folder + '/' + $file + '.woff') format('woff'),
-    url('../fonts/' + $folder + '/' + $file + '.ttf') format('truetype'),
-    url('../fonts/' + $folder + '/' + $file + '.svg##{$file}') format('svg');      
-  }
-
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    @font-face {
-      font-family: $font-family;
-      src: url('../fonts/' + $folder + '/' + $file + '.svg##{$file}') format('svg');
-    }
   }
 }
 
-// FONTS
-@include font-face(PTSansRegular,PTSansRegular,PTSansRegular);
-@include font-face(PTSansBold,PTSansBold,PTSansBold);
-@include font-face(PTSerifProBold,PTSerifProBold,PTSerifProBold);
-
-@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,700&subset=cyrillic');
+// Fonts
+@include font-face(SchoolbellReg, SchoolbellReg, SchoolbellReg);
 
 // VARIABLES
-$sans_reg: PTSansRegular;
-$sans_bld: PTSansBold;
-$serif_bld: PTSerifProBold;
-
+$schoolBellReg: SchoolbellReg;
 
 //backgrounds
 $brand_bg: #f7f8f4;
 
-//buttons
 
 //text and colors
+$black: #111111;
 $dark: #404041;
+$light: #ffffff;
+$brand: #ffdead;
 
-// helpers
-$big_number: #f3f3f3;
-$big_number_active: #f5f9e0;
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
 
-h1, h2, h3, h4 {margin: 0;}
-ul {margin-bottom: 0;}
+ul {
+  margin-bottom: 0;
+}
 
 body {
-	&.onload {overflow:hidden;}
+  &.onload {
+    overflow: hidden;
+  }
 
-	/* устанавливаем оптимальный вертикальный ритм */
-
-	/* сглаживание шрифтов в вебките */
-	-webkit-font-smoothing: subpixel-antialiased;
-			font-smoothing: subpixel-antialiased;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 a {
   text-decoration: none;
-  transition: all ease-in-out .2s;
+  transition: all ease-in-out 0.2s;
   cursor: pointer;
 
-	&:hover,
-	&:focus,
-	&:active {
-		text-decoration: none;
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
   }
 }
 
@@ -83,69 +75,75 @@ address {
 }
 
 form {
-	input,
-	select,
-	textarea {
-		-webkit-appearance: none;
-		text-overflow: ellipsis;
-		outline: none;
+  input,
+  select,
+  textarea {
+    -webkit-appearance: none;
+    text-overflow: ellipsis;
+    outline: none;
 
-		&:focus,
-		&:active {
-			text-overflow: ellipsis;
-		}
-	}
+    &:focus,
+    &:active {
+      text-overflow: ellipsis;
+    }
+  }
 
-	textarea {
-    	resize: vertical;
-	}
+  textarea {
+    resize: vertical;
+  }
 }
 
 input,
 select,
 textarea,
-label {cursor: pointer;}
-
-fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+label {
+  cursor: pointer;
 }
 
-/* выделение текста */
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+// Text selection
 ::-moz-selection {
-    background: rgba(1, 47, 32, 0.7);
-    text-shadow: none;
-    color: white;
+  background: rgba(1, 47, 32, .7);
+  text-shadow: none;
+  color: white;
 }
 
 ::selection {
-    background: rgba(1, 47, 32, 0.7);
-    text-shadow: none;
-    color: white;
+  background: rgba(1, 47, 32, .7);
+  text-shadow: none;
+  color: white;
 }
 
-
-// =======================================================================// 
-//                           Миксин адаптации                             //        
-// =======================================================================// 
+// Adaptation mixin
 @mixin respond-to($media) {
   @if $media == mobile {
-    @media only screen and (max-width: 320px) { @content; }
-  }
-  @else if $media == xs {
-    @media only screen and (max-width: 481px) { @content; }
-  }
-  @else if $media == sm {
-    @media only screen and (max-width: 767px) { @content; }
-  }
-  @else if $media == md {
-   @media only screen and(max-width: 991px) { @content; }
-  }
-  @else if $media == lg {
-   @media only screen and (max-width: 1199px) { @content; }
-  }
-  @else if $media == desktop {
-    @media only screen and (max-width: 1300px) { @content; }
+    @media only screen and (max-width: 320px) {
+      @content;
+    }
+  } @else if $media == xs {
+    @media only screen and (max-width: 481px) {
+      @content;
+    }
+  } @else if $media == sm {
+    @media only screen and (max-width: 767px) {
+      @content;
+    }
+  } @else if $media == md {
+    @media only screen and(max-width: 991px) {
+      @content;
+    }
+  } @else if $media == lg {
+    @media only screen and (max-width: 1199px) {
+      @content;
+    }
+  } @else if $media == desktop {
+    @media only screen and (max-width: 1300px) {
+      @content;
+    }
   }
 }

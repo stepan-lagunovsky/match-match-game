@@ -10,12 +10,11 @@
 
   <!-- Header -->
   <header class="header">
-    <div class="container">
-
+    <div class="container-fluid">
       <!-- Navigation -->
       <div class="navigation">
         <div class="controls">
-          <div class="nav-item">
+          <div class="control-item difficulty-controls">
             <div class="dropdown">
               <button>Choose Card Skirt</button>
               <div class="radio-set">
@@ -35,8 +34,6 @@
                 </label>
               </div>
             </div>
-          </div>
-          <div class="nav-item">
             <div class="dropdown">
               <button>Choose Difficulty</button>
               <div class="radio-set">
@@ -55,9 +52,11 @@
               </div>
             </div>
           </div>
-          <div class="nav-item">
-            <a class="start-new-game" href="/">New Game</a>
-            <button id="startButton" class="new-game">Start Game</button>
+          <div class="control-item new-game-controls">
+            <button id="startGameButton" class="start-game">Start Game</button>
+          </div>
+          <div class="control-item process-controls hidden">
+            <button id="newGameButton" class="new-game">New Game</button>
             <div class="play-pause-checkbox">
               <input id="playPause" type="checkbox">
               <label id="playPauseLabel" for="playPause">Pause</label>
@@ -67,6 +66,59 @@
         <div class="timer-box">
           <div class="timer">
             <div id="timer" class="timer-screen"></div>
+          </div>
+        </div>
+      </div>
+      <div class="side-drawer">
+        <div class="rules-box drawer-content">
+          <div class="description-box">
+            <h1>WELCOME TO MATCH MATCH GAME</h1>
+            <h2>Game Requirements</h2>
+            <ul>
+              <li>
+            <span>
+              - When entering the game, the user sees the greeting and short rules of the game.
+            </span>
+              </li>
+              <li>
+            <span>
+              - Player can choose kind of card shirts / number of cards (game difficulty)
+            </span>
+              </li>
+              <li>
+            <span>
+              - After the start, the timer starts;
+            </span>
+              </li>
+              <li>
+            <span>
+              - By clicking on the card - it turns over smoothly,
+                the matched cards also disappear smoothly,
+                if the pair does not match - both cards are turned over face down
+            </span>
+              </li>
+              <li>
+            <span>
+              - At the end of the game - notifying the player)
+            </span>
+              </li>
+              <li>
+            <span>
+              - Using jQuery, js and css frameworks is prohibited.
+            </span>
+              </li>
+              <li>ss
+                <span>
+              - The distribution of cards is always random!
+            </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="congrats-box drawer-content hidden">
+          <div class="description-box">
+            <h2>Congratulations</h2>
+            Your result is 100sec!
           </div>
         </div>
       </div>
