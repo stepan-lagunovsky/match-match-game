@@ -1,19 +1,19 @@
 h1 {
-  @include font-type($schoolBellReg, $light, 36px, 42px, 1px);
+  @include font-type($schoolBellReg, $brand, 36px, 42px, 1px);
   margin-bottom: 40px;
   font-weight: bold;
   text-align: center;
 }
 
 h2 {
-  @include font-type($schoolBellReg, $light, 28px, 34px, 1px);
+  @include font-type($schoolBellReg, $brand, 28px, 34px, 1px);
   margin-bottom: 20px;
-  font-weight: bold;
 }
 
 // Buttons
 .buttonStyled {
   @include font-type($schoolBellReg, $brand, 18px, 24px, 0px);
+
   background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
   outline: none;
   margin: 0;
@@ -136,14 +136,54 @@ button.new-game {
     }
 
     span {
-      @include font-type($schoolBellReg, $light, 18px, 24px, 0px);
+      @include font-type($schoolBellReg, $light, 18px, 24px, 0);
       display: block;
     }
   }
 }
 
-.congrats-box {
+.game-over-box {
+  .description-box {
+    min-height: 50vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
 
+  h2 {
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  span {
+    @include font-type($schoolBellReg, $brand, 24px, 24px, 0);
+    text-align: center;
+
+    &.total-clicks-label {
+      @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
+      font-weight: bold;
+      margin: 0 20px;
+    }
+  }
+
+  .try-again-button {
+    border: none;
+    background: none;
+    margin-top: 100px;
+    display: block;
+    @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    outline: none;
+
+    &:hover {
+      color: $light;
+      opacity: 0.8;
+    }
+  }
 }
 
 .navigation {
@@ -201,17 +241,11 @@ button.new-game {
     left: 50%;
     transform: translateX(-50%);
     z-index: -1;
-
-    .timer {
-      border: 2px solid $brand;
-      border-radius: 6px;
-      background: url('../img/table.jpg') no-repeat center center / cover;
-      @include font-type($schoolBellReg, $light, 22px, 24px, 5px);
-      font-weight: bold;
-      box-shadow: 1px 11px 25px 12px $black;
-    }
+    opacity: 1;
+    transition: all ease-in-out 0.4s;
 
     &.hidden {
+      opacity: 0;
       display: none;
     }
   }
@@ -225,6 +259,23 @@ button.new-game {
 
   button {
     @extend .buttonStyled;
+    position: relative;
+
+    .dropdown-label {
+      @include font-type($schoolBellReg, $brand, 18px, 24px, 1px);
+      font-weight: bold;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      right: 15px;
+      top: 50%;
+      height: 30px;
+      transform: translateY(-50%);
+
+      img {
+        height: 100%;
+      }
+    }
   }
 
   &.opened {
@@ -357,13 +408,27 @@ button.new-game {
   }
 }
 
-.timer {
+.timer,
+.total-clicks-counter {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
+  @include font-type($schoolBellReg, $light, 22px, 24px, 5px);
+  border: 2px solid $brand;
+  border-radius: 6px;
+  background: url('../img/table.jpg') no-repeat center center / cover;
+  font-weight: bold;
+  box-shadow: 1px 11px 25px 12px $black;
+}
+
+.total-clicks-counter {
+  width: 100px;
+  margin-right: 20px;
+}
+
+.timer {
   width: 200px;
-  background: white;
 }
 
 .logo {

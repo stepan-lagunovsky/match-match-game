@@ -24,7 +24,7 @@ const difficultyRadio = findByName('difficulty');
 const cardBackRadio = findByName('cardBack');
 const cardBoard = findById('cardBoard');
 const rulesBox = findByQuery('.rules-box');
-const congratsBox = findByQuery('.congrats-box');
+const gameOverBox = findByQuery('.game-over-box');
 const startGameButton = findById('startGameButton');
 const newGameButton = findById('newGameButton');
 const processControls = findByQuery('.process-controls');
@@ -34,6 +34,10 @@ const timerBox = findByQuery('.timer-box');
 const backDrop = findByQuery('.backdrop');
 
 listenEvent(newGameButton, 'click', () => {
+  window.location.reload();
+});
+
+listenEvent(findByQuery('.try-again-button'), 'click', () => {
   window.location.reload();
 });
 
@@ -96,14 +100,32 @@ const gameOptions = {
   cardBack: blueBack,
   cardsTotal: 10,
   images: [],
+  totalClicks: 0,
+  totalMatches: 0,
 };
 
 listenEventAll(cardBackRadio, 'change', event => {
-  gameOptions.cardBack = event.target.value === 'blue' ? blueBack : redBack;
+  const selectedCardBack = event.target.value === 'blue' ? blueBack : redBack;
+  gameOptions.cardBack = selectedCardBack;
+
+  findByQuery('.dropdown-label-skirt').src = selectedCardBack;
 });
 
 listenEventAll(difficultyRadio, 'change', event => {
   gameOptions.cardsTotal = event.target.value;
+
+  const EASY = 10;
+  const MEDIUM = 18;
+  const HARD = 24;
+
+  const DIFFICULTY_LABELS = {
+    [EASY]: 'Easy',
+    [MEDIUM]: 'Medium',
+    [HARD]: 'Hard',
+  };
+
+  findByQuery('.dropdown-label-difficulty').textContent =
+    DIFFICULTY_LABELS[event.target.value];
 });
 
 const setBoardGrid = total => {
@@ -163,9 +185,17 @@ listenEvent(startGameButton, 'click', () => {
   newGameControls.classList.add('hidden');
   processControls.classList.remove('hidden');
   difficultyControls.classList.add('hidden');
-  timerBox.classList.remove('hidden');
+  setTimeout(() => {
+    timerBox.classList.remove('hidden');
+  }, 1000);
   rulesBox.classList.add('hidden');
 });
+
+const calculateTotalClicks = () => {
+  ++gameOptions.totalClicks;
+
+  findByQuery('.total-clicks-counter').textContent = gameOptions.totalClicks;
+};
 
 const openCard = id => {
   findById(id).classList.add('rotateCardNow');
@@ -194,9 +224,20 @@ const resetSelectedCard = () => {
   selectedCard.inUse = false;
 };
 
+const checkGameOver = () => {
+  if (gameOptions.images.length / 2 === gameOptions.totalMatches) {
+    gameOverBox.classList.remove('hidden');
+    timerBox.classList.add('hidden');
+    timer.pause();
+
+    findByQuery('.total-clicks-label').textContent = gameOptions.totalClicks;
+  }
+};
+
 const cardClickHandler = (id, value) => {
   if (selectedCard.inUse) return;
   openCard(id);
+  calculateTotalClicks();
 
   if (selectedCard.id === null) {
     insertFirstCard(id, value);
@@ -207,8 +248,10 @@ const cardClickHandler = (id, value) => {
     selectedCard.inUse = true;
     setTimeout(() => {
       if (isCardMatch(value)) {
+        ++gameOptions.totalMatches;
         findById(id).remove();
         findById(selectedCard.id).remove();
+        checkGameOver();
       } else {
         closeCard(selectedCard.id);
         closeCard(id);

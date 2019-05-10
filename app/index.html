@@ -16,7 +16,11 @@
         <div class="controls">
           <div class="control-item difficulty-controls">
             <div class="dropdown">
-              <button>Choose Card Skirt</button>
+              <button>Choose Card Skirt
+                <span class="dropdown-label">
+                  <img class="dropdown-label-skirt" src="img/cards/back/blue_back.png">
+                </span>
+              </button>
               <div class="radio-set">
                 <label>
                   <input type="radio" checked name="cardBack" value="blue">
@@ -35,7 +39,12 @@
               </div>
             </div>
             <div class="dropdown">
-              <button>Choose Difficulty</button>
+              <button>
+                Choose Difficulty
+                <span class="dropdown-label dropdown-label-difficulty">
+                  Easy
+                </span>
+              </button>
               <div class="radio-set">
                 <label>
                   <input type="radio" checked name="difficulty" value="10">
@@ -53,7 +62,9 @@
             </div>
           </div>
           <div class="control-item new-game-controls">
-            <button id="startGameButton" class="start-game">Start Game</button>
+            <button id="startGameButton" class="start-game">
+              Start Game
+            </button>
           </div>
           <div class="control-item process-controls hidden">
             <div class="play-pause-checkbox">
@@ -68,6 +79,7 @@
           </div>
         </div>
         <div class="timer-box hidden">
+          <div class="total-clicks-counter">0</div>
           <div class="timer">
             <div id="timer" class="timer-screen"></div>
           </div>
@@ -125,10 +137,13 @@
             </ul>
           </div>
         </div>
-        <div class="congrats-box drawer-content hidden">
+        <div class="game-over-box drawer-content hidden">
           <div class="description-box">
-            <h2>Congratulations</h2>
-            Your result is 100sec!
+            <h2>Congratulations !</h2>
+
+            <span>You have successfully finished game with: <span class="total-clicks-label">123</span> clicks ;)</span>
+
+            <button class="try-again-button">Try again &#10548;</button>
           </div>
         </div>
       </div>
