@@ -90,28 +90,52 @@ const initializeClock = (id, endTime) => {
   timeInterval = setInterval(updateClock, 1000);
 };
 
-const days = 1;
-const hours = 1;
-const minutes = 0.25;
-const seconds = 1;
-
-const deadline = new Date(
-  Date.parse(new Date()) + days * 60 * minutes * 60 * seconds * 1000
-);
-
-const startTimer = () => {
-  initializeClock('timer', deadline);
-};
-
 const pauseTimer = () => {
   clearInterval(timeInterval);
 };
 
 const continueTimer = () => {
-  const deadline = new Date(Date.parse(new Date()) + t);
-  initializeClock('timer', deadline);
+  const continuedDeadLine = new Date(Date.parse(new Date()) + t);
+  initializeClock('timer', continuedDeadLine);
 };
 
+// Game state
+const state = {
+  cardBack: blueBack,
+  cardsTotal: 10,
+  images: [],
+  maxAllowableClicks: null,
+  totalClicks: 0,
+  totalMatches: 0,
+  time: {
+    days: 1,
+    hours: 0,
+    minutes: 0.25,
+    seconds: 1,
+  },
+};
+
+const startTimer = timeObj => {
+  const deadLine = new Date(
+    Date.parse(new Date()) +
+      timeObj.days * 60 * timeObj.minutes * 60 * timeObj.seconds * 1000
+  );
+
+  initializeClock('timer', deadLine);
+};
+
+const setGameTime = totalCards => {
+  let difficultyType;
+
+  if (totalCards === 24) {
+    difficultyType = 3 / 60;
+  } else if (totalCards === '18') {
+    difficultyType = 2 / 60;
+  } else {
+    difficultyType = 0.5 / 60;
+  }
+  state.time.minutes = difficultyType.toFixed(2);
+};
 
 // Play/pause
 listenEvent(playPause, 'change', event => {
@@ -128,16 +152,6 @@ listenEvent(playPause, 'change', event => {
     backDrop.classList.add('hidden');
   }
 });
-
-// Game state
-const state = {
-  cardBack: blueBack,
-  cardsTotal: 10,
-  images: [],
-  maxAllowableClicks: null,
-  totalClicks: 0,
-  totalMatches: 0,
-};
 
 const setMaxAllowedClicks = totalCards => {
   state.maxAllowableClicks = totalCards * 2 + 10;
@@ -219,7 +233,8 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
-  startTimer();
+  setGameTime(state.cardsTotal);
+  startTimer(state.time);
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
@@ -283,6 +298,9 @@ const checkGameOver = () => {
     pauseTimer();
 
     findByQuery('.total-clicks-label').textContent = state.totalClicks;
+
+    // TODO: Create getTime method
+    findByQuery('.total-time-label').textContent = 'get total time';
   }
 };
 

@@ -161,6 +161,7 @@ button.new-game {
 
     text-align: center;
 
+    &.total-time-label,
     &.total-clicks-label {
       @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
 
