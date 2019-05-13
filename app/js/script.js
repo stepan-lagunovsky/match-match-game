@@ -49,35 +49,69 @@ listenEvent(document, 'mouseup', () => {
 });
 
 // TIMER
-let totalSeconds = 0;
+let timeInterval;
+let t = 0;
 
-function Timer() {
-  let timerId;
-  let start;
-  let remaining;
+const getTimeRemaining = endTime => {
+  t = Date.parse(endTime) - Date.parse(new Date());
+  const seconds = Math.floor((t / 1000) % 60);
+  const minutes = Math.floor((t / 1000 / 60) % 60);
+  const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+  const days = Math.floor(t / (1000 * 60 * 60 * 24));
+  return {
+    total: t,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
+};
 
-  this.pause = () => {
-    window.clearTimeout(timerId);
-    remaining -= Date.now() - start;
+const initializeClock = (id, endTime) => {
+  const daysSpan = findByQuery('.days');
+  const hoursSpan = findByQuery('.hours');
+  const minutesSpan = findByQuery('.minutes');
+  const secondsSpan = findByQuery('.seconds');
+
+  const updateClock = () => {
+    const t = getTimeRemaining(endTime);
+
+    daysSpan.innerHTML = t.days;
+    hoursSpan.innerHTML = `0${t.hours}`.slice(-2);
+    minutesSpan.innerHTML = `0${t.minutes}`.slice(-2);
+    secondsSpan.innerHTML = `0${t.seconds}`.slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeInterval);
+    }
   };
 
-  this.resume = () => {
-    start = Date.now();
-    window.clearTimeout(timerId);
-    timerId = window.setInterval(() => {
-      ++totalSeconds;
+  updateClock();
+  timeInterval = setInterval(updateClock, 1000);
+};
 
-      findById('timer').innerHTML = `${Math.floor(
-        totalSeconds
-      )}`;
-    }, remaining);
-  };
+const days = 1;
+const hours = 1;
+const minutes = 0.25;
+const seconds = 1;
 
-  this.pause();
-}
+const deadline = new Date(
+  Date.parse(new Date()) + days * 60 * minutes * 60 * seconds * 1000
+);
 
-const timer = new Timer();
-timer.resume();
+const startTimer = () => {
+  initializeClock('timer', deadline);
+};
+
+const pauseTimer = () => {
+  clearInterval(timeInterval);
+};
+
+const continueTimer = () => {
+  const deadline = new Date(Date.parse(new Date()) + t);
+  initializeClock('timer', deadline);
+};
+
 
 // Play/pause
 listenEvent(playPause, 'change', event => {
@@ -85,10 +119,12 @@ listenEvent(playPause, 'change', event => {
   playPauseLabel.textContent = checked ? 'Continue' : 'Pause';
 
   if (checked) {
-    timer.pause();
+    pauseTimer();
+
     backDrop.classList.remove('hidden');
   } else {
-    timer.resume();
+    continueTimer();
+
     backDrop.classList.add('hidden');
   }
 });
@@ -183,6 +219,7 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
+  startTimer();
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
@@ -243,7 +280,7 @@ const checkGameOver = () => {
     gameOverBox.classList.remove('hidden');
     timerBox.classList.add('hidden');
     counterBox.classList.add('hidden');
-    timer.pause();
+    pauseTimer();
 
     findByQuery('.total-clicks-label').textContent = state.totalClicks;
   }

@@ -45,11 +45,12 @@ h2 {
 }
 
 button.start-game {
-  @extend .buttonStyled;
+  @extend.buttonStyled;
 }
 
 button.new-game {
-  @extend .buttonStyled;
+  @extend.buttonStyled;
+
   width: 150px;
 }
 
@@ -63,7 +64,8 @@ button.new-game {
 
   input {
     & + label {
-      @extend .buttonStyled;
+      @extend.buttonStyled;
+
       width: 150px;
     }
   }
@@ -110,12 +112,6 @@ button.new-game {
       max-height: 0;
       border: none;
     }
-
-    .description-box {
-      padding: 50px;
-      width: 100%;
-      box-sizing: border-box;
-    }
   }
 }
 
@@ -144,13 +140,13 @@ button.new-game {
   }
 }
 
-.game-over-box {
-  .description-box {
-    min-height: 50vh;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-  }
+.description-box {
+  padding: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
 
   h2 {
     font-size: 36px;
@@ -162,21 +158,24 @@ button.new-game {
 
   span {
     @include font-type($schoolBellReg, $brand, 24px, 24px, 0);
+
     text-align: center;
 
     &.total-clicks-label {
       @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
+
       font-weight: bold;
       margin: 0 20px;
     }
   }
 
   .try-again-button {
+    @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
+
     border: none;
     background: none;
     margin-top: 100px;
     display: block;
-    @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
     cursor: pointer;
     transition: all ease-in-out 0.2s;
     outline: none;
@@ -185,6 +184,24 @@ button.new-game {
       color: $light;
       opacity: 0.8;
     }
+  }
+}
+
+.rules-box {
+  .description-box {
+    justify-content: flex-start;
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+}
+
+.game-over-box {
+  .description-box {
+    justify-content: center;
   }
 }
 
@@ -233,25 +250,6 @@ button.new-game {
       }
     }
   }
-
-  .timer-box,
-  .counter-box {
-    padding: 5px 0;
-    opacity: 1;
-    transition: all ease-in-out 0.4s;
-
-    &.hidden {
-      opacity: 0;
-      display: none;
-    }
-  }
-
-  .counter-box {
-    position: absolute;
-    top: calc(100% + 150px);
-    left: 50%;
-    transform: translateX(-50%);
-  }
 }
 
 .dropdown {
@@ -261,7 +259,8 @@ button.new-game {
   position: relative;
 
   button {
-    @extend .buttonStyled;
+    @extend.buttonStyled;
+
     position: relative;
 
     .dropdown-label {
@@ -411,8 +410,27 @@ button.new-game {
   }
 }
 
-.timer,
-.total-clicks-counter {
+.timer-box,
+.counter-box {
+  padding: 5px 0;
+  opacity: 1;
+  transition: all ease-in-out 0.4s;
+
+  &.hidden {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.counter-box {
+  position: absolute;
+  top: calc(100% + 150px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.total-clicks-counter,
+.timer-screen {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -424,12 +442,28 @@ button.new-game {
   box-shadow: 1px 11px 25px 12px $black;
 }
 
+.timer-screen {
+  .time-label {
+    @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
+
+    width: 110px;
+
+    .minutes,
+    .seconds {
+      @include font-type($schoolBellReg, $light, 24px, 28px, 5px);
+    }
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
+
 .total-clicks-counter {
   @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
 
   font-weight: bold;
   width: 350px;
-  margin-right: 20px;
 
   .progress-icon {
     @include font-type($schoolBellReg, $brand, 22px, 24px, 5px);
@@ -443,10 +477,6 @@ button.new-game {
 
     margin: 0 10px;
   }
-}
-
-.timer {
-  width: 200px;
 }
 
 .logo {
@@ -463,5 +493,5 @@ button.new-game {
 }
 
 input[type='button'] {
-  @extend .buttonStyled;
+  @extend.buttonStyled;
 }
