@@ -50,6 +50,7 @@ button.start-game {
 
 button.new-game {
   @extend .buttonStyled;
+  width: 150px;
 }
 
 // Inputs
@@ -63,6 +64,7 @@ button.new-game {
   input {
     & + label {
       @extend .buttonStyled;
+      width: 150px;
     }
   }
 }
@@ -195,6 +197,7 @@ button.new-game {
   z-index: 1;
   box-shadow: 0 5px 10px 0 $black;
   padding: 0 20px;
+  border-bottom: 1px solid $black;
 
   .controls {
     display: flex;
@@ -231,16 +234,9 @@ button.new-game {
     }
   }
 
-  .timer-box {
+  .timer-box,
+  .counter-box {
     padding: 5px 0;
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    position: absolute;
-    top: calc(100% + 40px);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -1;
     opacity: 1;
     transition: all ease-in-out 0.4s;
 
@@ -248,6 +244,13 @@ button.new-game {
       opacity: 0;
       display: none;
     }
+  }
+
+  .counter-box {
+    position: absolute;
+    top: calc(100% + 150px);
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 
@@ -414,7 +417,6 @@ button.new-game {
   justify-content: center;
   align-items: center;
   height: 40px;
-  @include font-type($schoolBellReg, $light, 22px, 24px, 5px);
   border: 2px solid $brand;
   border-radius: 6px;
   background: url('../img/table.jpg') no-repeat center center / cover;
@@ -423,8 +425,24 @@ button.new-game {
 }
 
 .total-clicks-counter {
-  width: 100px;
+  @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
+
+  font-weight: bold;
+  width: 350px;
   margin-right: 20px;
+
+  .progress-icon {
+    @include font-type($schoolBellReg, $brand, 22px, 24px, 5px);
+
+    font-weight: 100;
+    margin-left: 10px;
+  }
+
+  .total {
+    @include font-type($schoolBellReg, white, 30px, 36px, 0);
+
+    margin: 0 10px;
+  }
 }
 
 .timer {

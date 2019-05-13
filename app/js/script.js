@@ -3,9 +3,6 @@ import blueBack from '../img/cards/back/blue_back.png';
 import redBack from '../img/cards/back/red_back.png';
 import { cardImages } from './cards';
 
-require('babel-core/register');
-require('babel-polyfill');
-
 const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
 const findById = id => document.getElementById(id);
@@ -31,6 +28,7 @@ const processControls = findByQuery('.process-controls');
 const difficultyControls = findByQuery('.difficulty-controls');
 const newGameControls = findByQuery('.new-game-controls');
 const timerBox = findByQuery('.timer-box');
+const counterBox = findByQuery('.counter-box');
 const backDrop = findByQuery('.backdrop');
 
 listenEvent(newGameButton, 'click', () => {
@@ -70,7 +68,7 @@ function Timer() {
       ++totalSeconds;
 
       findById('timer').innerHTML = `${Math.floor(
-        (totalSeconds / 1000) * 2.5
+        totalSeconds
       )}`;
     }, remaining);
   };
@@ -96,23 +94,29 @@ listenEvent(playPause, 'change', event => {
 });
 
 // Game state
-const gameOptions = {
+const state = {
   cardBack: blueBack,
   cardsTotal: 10,
   images: [],
+  maxAllowableClicks: null,
   totalClicks: 0,
   totalMatches: 0,
 };
 
+const setMaxAllowedClicks = totalCards => {
+  state.maxAllowableClicks = totalCards * 2 + 10;
+  findByQuery('.max-allowed-clicks').innerText = totalCards * 2 + 10;
+};
+
 listenEventAll(cardBackRadio, 'change', event => {
   const selectedCardBack = event.target.value === 'blue' ? blueBack : redBack;
-  gameOptions.cardBack = selectedCardBack;
+  state.cardBack = selectedCardBack;
 
   findByQuery('.dropdown-label-skirt').src = selectedCardBack;
 });
 
 listenEventAll(difficultyRadio, 'change', event => {
-  gameOptions.cardsTotal = event.target.value;
+  state.cardsTotal = event.target.value;
 
   const EASY = 10;
   const MEDIUM = 18;
@@ -153,7 +157,7 @@ const shuffleCards = a => {
 
 const prepareAndSetCards = total => {
   const aHalfOfCards = cardImages.slice(0, total / 2);
-  gameOptions.images = shuffleCards([...aHalfOfCards, ...aHalfOfCards]);
+  state.images = shuffleCards([...aHalfOfCards, ...aHalfOfCards]);
 };
 
 const drawCards = shuffledArray => {
@@ -163,7 +167,7 @@ const drawCards = shuffledArray => {
         <div class="card" id="card_${index}" data-card-front='${currentFront}'>
           <div class="card__side card__side--front">
             <div class="card__picture card__picture--front">
-              <img alt class="imageOfTheCard" src="${gameOptions.cardBack}"/>
+              <img alt class="imageOfTheCard" src="${state.cardBack}"/>
             </div>
           </div>
           <div class="card__side card__side--back card__side--back-1">
@@ -179,22 +183,32 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
-  setBoardGrid(gameOptions.cardsTotal);
-  prepareAndSetCards(gameOptions.cardsTotal);
-  drawCards(gameOptions.images);
+  setMaxAllowedClicks(state.cardsTotal);
+  setBoardGrid(state.cardsTotal);
+  prepareAndSetCards(state.cardsTotal);
   newGameControls.classList.add('hidden');
   processControls.classList.remove('hidden');
   difficultyControls.classList.add('hidden');
-  setTimeout(() => {
-    timerBox.classList.remove('hidden');
-  }, 1000);
   rulesBox.classList.add('hidden');
+  setTimeout(() => {
+    drawCards(state.images);
+    timerBox.classList.remove('hidden');
+    counterBox.classList.remove('hidden');
+  }, 400);
 });
 
-const calculateTotalClicks = () => {
-  ++gameOptions.totalClicks;
+const toggleProgressEmojis = totalClicks => {
+  const GREAT_GAME_EMOJI = '&#x1F60E;';
+  const BAD_GAME_EMOJI = '&#x1F622;';
 
-  findByQuery('.total-clicks-counter').textContent = gameOptions.totalClicks;
+  if (totalClicks <= state.maxAllowableClicks) {
+    return GREAT_GAME_EMOJI;
+  }
+  return BAD_GAME_EMOJI;
+};
+
+const drawEmojiOnCardClicks = totalClicks => {
+  findByQuery('.progress-icon').innerHTML = toggleProgressEmojis(totalClicks);
 };
 
 const openCard = id => {
@@ -225,19 +239,27 @@ const resetSelectedCard = () => {
 };
 
 const checkGameOver = () => {
-  if (gameOptions.images.length / 2 === gameOptions.totalMatches) {
+  if (state.images.length / 2 === state.totalMatches) {
     gameOverBox.classList.remove('hidden');
     timerBox.classList.add('hidden');
+    counterBox.classList.add('hidden');
     timer.pause();
 
-    findByQuery('.total-clicks-label').textContent = gameOptions.totalClicks;
+    findByQuery('.total-clicks-label').textContent = state.totalClicks;
   }
+};
+
+const calculateTotalClicks = () => {
+  ++state.totalClicks;
+
+  findByQuery('.total-clicks').textContent = state.totalClicks;
 };
 
 const cardClickHandler = (id, value) => {
   if (selectedCard.inUse) return;
   openCard(id);
   calculateTotalClicks();
+  drawEmojiOnCardClicks(state.totalClicks);
 
   if (selectedCard.id === null) {
     insertFirstCard(id, value);
@@ -248,7 +270,7 @@ const cardClickHandler = (id, value) => {
     selectedCard.inUse = true;
     setTimeout(() => {
       if (isCardMatch(value)) {
-        ++gameOptions.totalMatches;
+        ++state.totalMatches;
         findById(id).remove();
         findById(selectedCard.id).remove();
         checkGameOver();

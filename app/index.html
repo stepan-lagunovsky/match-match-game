@@ -71,17 +71,28 @@
               <input id="playPause" type="checkbox">
               <label id="playPauseLabel" for="playPause">Pause</label>
             </div>
+
+            <div class="timer-box hidden">
+              <div class="timer">
+                <div id="timer" class="timer-screen"></div>
+              </div>
+            </div>
+
+            <div class="counter-box hidden">
+              <div class="total-clicks-counter">
+                Total clicks:
+                <span class="total">
+                  <span class="total-clicks">0</span> / <span class="max-allowed-clicks"></span>
+                </span>
+                <span class="progress-icon">&#x1F60E;</span>
+              </div>
+            </div>
+
             <button id="newGameButton" class="new-game">New Game</button>
             <!-- Backdrop -->
             <div class="backdrop hidden">
               Paused ;)
             </div>
-          </div>
-        </div>
-        <div class="timer-box hidden">
-          <div class="total-clicks-counter">0</div>
-          <div class="timer">
-            <div id="timer" class="timer-screen"></div>
           </div>
         </div>
       </div>
