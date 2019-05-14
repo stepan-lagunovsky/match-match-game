@@ -12,24 +12,21 @@ h2 {
 
 // Buttons
 .buttonStyled {
-  @include font-type($schoolBellReg, $brand, 18px, 24px, 0px);
+  @include font-type($schoolBellReg, $brand, 18px, 24px, 0);
 
   background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
   outline: none;
   margin: 0;
+  padding: 10px 20px;
+  cursor: pointer;
   transition: all ease-in-out 0.2s;
   cursor: pointer;
-  height: 50px;
   box-shadow: 0 10px 15px 0 rgba(1, 1, 1, 0.5);
   border: 1px solid rgba(222, 222, 222, 0.5);
   text-transform: uppercase;
-  font-size: 18px;
-  padding: 0 20px;
-  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
   min-width: 120px;
   width: 100%;
 
@@ -58,11 +55,9 @@ button.new-game {
 .play-pause-checkbox {
   z-index: 2;
 
-  input {
+  input[type="checkbox"] {
     display: none;
-  }
 
-  input {
     & + label {
       @extend.buttonStyled;
 
@@ -72,8 +67,11 @@ button.new-game {
 }
 
 .backdrop {
-  background: rgba(1, 1, 1, .8);
+  @include font-type($schoolBellReg, $light, 36px, 42px, 1px);
+
+  background: rgba(1, 1, 1, 0.8);
   position: fixed;
+  z-index: 1;
   top: 0;
   left: 0;
   width: 100%;
@@ -81,9 +79,8 @@ button.new-game {
   display: flex;
   justify-content: center;
   align-items: center;
-  @include font-type($schoolBellReg, $light, 36px, 42px, 1px);
   opacity: 1;
-  transition: opacity ease-in-out .2s;
+  transition: opacity ease-in-out 0.2s;
 
   &.hidden {
     height: 0;
@@ -94,9 +91,10 @@ button.new-game {
 .side-drawer {
   top: 100%;
   position: absolute;
-  background: rgba(1, 1, 1, .8);
-  box-shadow: 0 33px 40px 0 $black;
-  width: calc(100% - 80px);
+  padding: 0 40px;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
 
   .drawer-content {
     display: flex;
@@ -104,9 +102,11 @@ button.new-game {
     align-items: center;
     flex-direction: column;
     overflow: hidden;
-    transition: max-height ease-in-out .4s;
+    transition: max-height ease-in-out 0.4s;
     max-height: 100vh;
     border: 2px solid $black;
+    background: rgba(1, 1, 1, 0.8);
+    box-shadow: 0 33px 40px 0 $black;
 
     &.hidden {
       max-height: 0;
@@ -121,7 +121,7 @@ button.new-game {
     padding-left: 30px;
     position: relative;
 
-    &:before {
+    &::before {
       content: '';
       display: block;
       width: 10px;
@@ -130,12 +130,17 @@ button.new-game {
       border: 1px solid green;
       background: $brand;
       position: absolute;
-      left: 0; top: 8px;
+      left: 0;
+      top: 8px;
     }
 
     span {
       @include font-type($schoolBellReg, $light, 18px, 24px, 0);
       display: block;
+
+      @include respond-to(md) {
+        @include font-type($schoolBellReg, $light, 12px, 28px, 0);
+      };
     }
   }
 }
@@ -144,15 +149,17 @@ button.new-game {
   padding: 50px;
   width: 100%;
   box-sizing: border-box;
-  min-height: 50vh;
+  max-height: 80vh;
   display: flex;
   flex-direction: column;
 
+  h1 {
+    margin-bottom: 20px;
+  }
+
   h2 {
-    font-size: 36px;
     text-align: center;
     margin-bottom: 20px;
-    font-weight: bold;
     text-transform: uppercase;
   }
 
@@ -210,19 +217,12 @@ button.new-game {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 5px 10px 0 $black;
-  padding: 0 20px;
-  border-bottom: 1px solid $black;
 
   .controls {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
     width: 100%;
-    padding: 5px 0;
 
     .control-item {
       margin: 0 20px;
@@ -262,18 +262,14 @@ button.new-game {
   button {
     @extend.buttonStyled;
 
-    position: relative;
-
     .dropdown-label {
       @include font-type($schoolBellReg, $brand, 18px, 24px, 1px);
-      font-weight: bold;
-      position: absolute;
+
       display: flex;
       align-items: center;
-      right: 15px;
-      top: 50%;
+      font-weight: bold;
       height: 30px;
-      transform: translateY(-50%);
+      margin-left: auto;
 
       img {
         height: 100%;
@@ -344,9 +340,19 @@ button.new-game {
 }
 
 .cards-table {
+  @include respond-to(md) {
+    width: 80%;
+  }
+
   perspective: 2000px;
+  width: 60%;
+  height: 100%;
 
   .solitaire {
+    @include respond-to(sm) {
+      padding: 20px;
+    };
+
     box-sizing: border-box;
     display: grid;
     grid-gap: 20px 20px;
@@ -355,26 +361,25 @@ button.new-game {
     padding: 50px;
     box-shadow: 0 23px 30px 0 $black;
     width: 100%;
-    min-width: 940px;
-    min-height: 620px;
+    height: 100%;
     align-items: center;
   }
 }
 
 .card-box {
-  height: 250px;
-  width: 150px;
+  height: 100%;
+  width: 100%;
 
   .card {
     perspective: 150rem;
     position: relative;
     width: 100%;
-    height: 250px;
+    height: 100%;
     cursor: pointer;
 
     &__side {
-      height: 250px;
-      transition: all .8s ease;
+      height: 100%;
+      transition: all 0.8s ease;
       position: absolute;
       top: 0;
       left: 0;
@@ -413,9 +418,13 @@ button.new-game {
 
 .timer-box,
 .counter-box {
-  padding: 5px 0;
   opacity: 1;
   transition: all ease-in-out 0.4s;
+  border: 2px solid $brand;
+  border-radius: 6px;
+  background: url('../img/table.jpg') no-repeat center center / cover;
+  font-weight: bold;
+  box-shadow: 1px 11px 25px 12px $black;
 
   &.hidden {
     opacity: 0;
@@ -424,30 +433,20 @@ button.new-game {
 }
 
 .counter-box {
-  position: absolute;
-  top: calc(100% + 150px);
-  left: 50%;
-  transform: translateX(-50%);
+  margin: 20px 0;
 }
 
-.total-clicks-counter,
 .timer-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 40px;
-  border: 2px solid $brand;
-  border-radius: 6px;
-  background: url('../img/table.jpg') no-repeat center center / cover;
-  font-weight: bold;
-  box-shadow: 1px 11px 25px 12px $black;
+
+}
+
+.total-clicks-screen {
+
 }
 
 .timer-screen {
   .time-label {
     @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
-
-    width: 110px;
 
     .minutes,
     .seconds {
@@ -460,36 +459,13 @@ button.new-game {
   }
 }
 
-.total-clicks-counter {
+.total-clicks-screen {
   @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
-
-  font-weight: bold;
-  width: 350px;
-
-  .progress-icon {
-    @include font-type($schoolBellReg, $brand, 22px, 24px, 5px);
-
-    font-weight: 100;
-    margin-left: 10px;
-  }
 
   .total {
     @include font-type($schoolBellReg, white, 30px, 36px, 0);
 
     margin: 0 10px;
-  }
-}
-
-.logo {
-  background: url('../img/logo.jpg') center center no-repeat / cover;
-  width: 50px;
-  height: 50px;
-  transform: rotate(154deg);
-  display: block;
-  opacity: .8;
-
-  &:hover {
-    opacity: 1;
   }
 }
 

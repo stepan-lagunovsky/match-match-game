@@ -10,168 +10,172 @@
 
   <!-- Header -->
   <header class="header">
-    <div class="container-fluid">
-      <!-- Navigation -->
-      <div class="navigation">
-        <div class="controls">
-          <div class="control-item difficulty-controls">
-            <div class="dropdown">
-              <button>Choose Card Skirt
-                <span class="dropdown-label">
-                  <img class="dropdown-label-skirt" src="img/cards/back/blue_back.png">
-                </span>
-              </button>
-              <div class="radio-set">
-                <label>
-                  <input type="radio" checked name="cardBack" value="blue">
-                  <span>
+    <div class="header-top">
+      <div class="container">
+        <!-- Navigation -->
+        <div class="navigation">
+          <div class="controls">
+            <div class="control-item difficulty-controls">
+              <div class="dropdown">
+                <button>Choose Card Skirt
+                  <span class="dropdown-label">
+                    <img class="dropdown-label-skirt" src="img/cards/back/blue_back.png">
+                  </span>
+                </button>
+                <div class="radio-set">
+                  <label>
+                    <input type="radio" checked name="cardBack" value="blue">
+                    <span>
                     Blue
                     <img src="img/cards/back/blue_back.png" width="50px">
                   </span>
-                </label>
-                <label>
-                  <input type="radio" name="cardBack" value="red">
-                  <span>
+                  </label>
+                  <label>
+                    <input type="radio" name="cardBack" value="red">
+                    <span>
                     Red
                     <img src="img/cards/back/red_back.png" width="50px">
                   </span>
-                </label>
+                  </label>
+                </div>
               </div>
-            </div>
-            <div class="dropdown">
-              <button>
-                Choose Difficulty
-                <span class="dropdown-label dropdown-label-difficulty">
+              <div class="dropdown">
+                <button>
+                  Choose Difficulty
+                  <span class="dropdown-label dropdown-label-difficulty">
                   Easy
                 </span>
+                </button>
+                <div class="radio-set">
+                  <label>
+                    <input type="radio" checked name="difficulty" value="10">
+                    <span>Easy (5x2)</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="difficulty" value="18">
+                    <span>Medium (6x3)</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="difficulty" value="24">
+                    <span>Hard (8x3)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="control-item new-game-controls">
+              <button id="startGameButton" class="start-game">
+                Start Game
               </button>
-              <div class="radio-set">
-                <label>
-                  <input type="radio" checked name="difficulty" value="10">
-                  <span>Easy (5x2)</span>
-                </label>
-                <label>
-                  <input type="radio" name="difficulty" value="18">
-                  <span>Medium (6x3)</span>
-                </label>
-                <label>
-                  <input type="radio" name="difficulty" value="24">
-                  <span>Hard (8x3)</span>
-                </label>
+            </div>
+            <div class="control-item process-controls hidden">
+              <div class="play-pause-checkbox">
+                <input id="playPause" type="checkbox">
+                <label id="playPauseLabel" for="playPause">Pause</label>
               </div>
-            </div>
-          </div>
-          <div class="control-item new-game-controls">
-            <button id="startGameButton" class="start-game">
-              Start Game
-            </button>
-          </div>
-          <div class="control-item process-controls hidden">
-            <div class="play-pause-checkbox">
-              <input id="playPause" type="checkbox">
-              <label id="playPauseLabel" for="playPause">Pause</label>
-            </div>
 
-            <div class="timer-box hidden">
-              <div id="timer" class="timer-screen">
-                <div class="time-label hidden">
-                  D:
-                  <span class="days"></span>
-                </div>
-                <div class="time-label hidden">
-                  H:
-                  <span class="hours">t</span>
-                </div>
-                <div class="time-label">
-                  Min:
-                  <span class="minutes"></span>
-                </div>
-                <div class="time-label">
-                  Sec:
-                  <span class="seconds"></span>
+              <div class="timer-box hidden">
+                <div id="timer" class="timer-screen">
+                  <div class="time-label hidden">
+                    D:
+                    <span class="days"></span>
+                  </div>
+                  <div class="time-label hidden">
+                    H:
+                    <span class="hours">t</span>
+                  </div>
+                  <div class="time-label">
+                    Min:
+                    <span class="minutes"></span>
+                  </div>
+                  <div class="time-label">
+                    Sec:
+                    <span class="seconds"></span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div class="counter-box hidden">
-              <div class="total-clicks-counter">
-                Total clicks:
-                <span class="total">
-                  <span class="total-clicks">0</span> / <span class="max-allowed-clicks"></span>
-                </span>
-                <span class="progress-icon">&#x1F60E;</span>
+              <button id="newGameButton" class="new-game">New Game</button>
+              <!-- Backdrop -->
+              <div class="backdrop hidden">
+                Paused ;)
               </div>
-            </div>
-
-            <button id="newGameButton" class="new-game">New Game</button>
-            <!-- Backdrop -->
-            <div class="backdrop hidden">
-              Paused ;)
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Side-drawer -->
-      <div class="side-drawer">
-        <div class="rules-box drawer-content">
-          <div class="description-box">
-            <h1>WELCOME TO MATCH MATCH GAME</h1>
-            <h2>Game Requirements</h2>
-            <ul>
-              <li>
+    </div>
+    <div class="header-bottom">
+      <div class="container">
+        <div class="counter-box hidden">
+          <div class="total-clicks-screen">
+            Total clicks:
+            <span class="total">
+                    <span class="total-clicks">0</span> / <span class="max-allowed-clicks"></span>
+                  </span>
+            <span class="progress-icon">&#x1F60E;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Side-drawer -->
+    <div class="side-drawer">
+      <div class="rules-box drawer-content">
+        <div class="description-box">
+          <h1>WELCOME TO MATCH MATCH GAME</h1>
+          <h2>Game Requirements</h2>
+          <ul>
+            <li>
                 <span>
                 When entering the game, the user sees the greeting and short rules of the game.
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                 Player can choose kind of card shirts / number of cards (game difficulty)
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                 After the start, the timer starts;
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                   By clicking on the card - it turns over smoothly,
                 </span>
-                <span>
+              <span>
                   the matched cards also disappear smoothly,
                 </span>
-                <span>
+              <span>
                   if the pair does not match - both cards are turned over face down
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                   At the end of the game - notifying the player)
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                   Using jQuery, js and css frameworks is prohibited.
                 </span>
-              </li>
-              <li>
+            </li>
+            <li>
                 <span>
                   The distribution of cards is always random!
                 </span>
-              </li>
-            </ul>
-          </div>
+            </li>
+          </ul>
         </div>
-        <div class="game-over-box drawer-content hidden">
-          <div class="description-box">
-            <h2 class="congratulation-title">Congratulations !</h2>
+      </div>
+      <div class="game-over-box drawer-content hidden">
+        <div class="description-box">
+          <h2 class="congratulation-title">Congratulations !</h2>
 
-            <span>You have finished game with: <span class="total-clicks-label"></span> clicks!</span>
-            <span>Your total time is: <span class="total-time-label"></span></span>
+          <span>You have finished game with: <span class="total-clicks-label"></span> clicks!</span>
+          <span>Your total time is: <span class="total-time-label"></span></span>
 
-            <button class="try-again-button">Try again &#10548;</button>
-          </div>
+          <button class="try-again-button">Try again &#10548;</button>
         </div>
       </div>
     </div>
