@@ -26,6 +26,8 @@ header {
     box-shadow: 0 5px 10px 0 $black;
     border-bottom: 1px solid $black;
     padding: 5px 0;
+    position: relative;
+    z-index: 2;
   }
 }
 
@@ -34,8 +36,12 @@ section {
     &-card-board {
       display: flex;
 
-      @include respond-to(md) {
-        padding: 0;
+      .table-holder {
+        @include respond-to(sm) {
+          width: 90%;
+        };
+
+        width: 60%;
       }
     }
   }

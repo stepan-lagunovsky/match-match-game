@@ -12,6 +12,10 @@ h2 {
 
 // Buttons
 .buttonStyled {
+  @include respond-to(xs) {
+    width: 100%;
+  };
+
   @include font-type($schoolBellReg, $brand, 18px, 24px, 0);
 
   background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
@@ -27,8 +31,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 120px;
-  width: 100%;
+  min-width: 130px;
 
   &:disabled {
     opacity: 0.5;
@@ -235,11 +238,19 @@ button.new-game {
       }
 
       &.difficulty-controls {
-        width: 70%;
+        width: auto;
+
+        @include respond-to(md) {
+          width: auto;
+        };
       }
 
       &.new-game-controls {
-        width: 15%;
+        width: 200px;
+
+        @include respond-to(xs) {
+          width: 100%;
+        };
       }
 
       &.process-controls {
@@ -258,6 +269,18 @@ button.new-game {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  @include respond-to(lg) {
+    width: 300px;
+  };
+
+  @include respond-to(md) {
+    width: 220px;
+  };
+
+  @include respond-to(xs) {
+    width: 100%;
+  };
 
   button {
     @extend.buttonStyled;
@@ -279,21 +302,21 @@ button.new-game {
 
   &.opened {
     button {
-      opacity: .8;
+      opacity: 0.8;
 
-      &:hover {
+      &::hover {
         opacity: 1;
       }
     }
 
     .radio-set {
       display: block;
+      z-index: 1;
     }
   }
 
   .radio-set {
-    background: url('../img/dropdown-background.jpg') top center no-repeat /
-          cover;
+    background: url('../img/dropdown-background.jpg') top center no-repeat / cover;
     display: none;
     position: absolute;
     left: 0;
@@ -339,18 +362,31 @@ button.new-game {
   }
 }
 
-.cards-table {
-  @include respond-to(md) {
-    width: 80%;
-  }
+.asd {
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
 
+  .content {
+    position:  absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: red;
+  }
+}
+
+.cards-table {
   perspective: 2000px;
-  width: 60%;
-  height: 100%;
+  width: 100%;
+  position: relative;
+  padding-top: 70.25%;
 
   .solitaire {
     @include respond-to(sm) {
       padding: 20px;
+      grid-gap: 10px 10px;
     };
 
     box-sizing: border-box;
@@ -360,9 +396,12 @@ button.new-game {
     background: url('../img/table.jpg') no-repeat center center / cover;
     padding: 50px;
     box-shadow: 0 23px 30px 0 $black;
-    width: 100%;
-    height: 100%;
     align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   }
 }
 
@@ -425,6 +464,7 @@ button.new-game {
   background: url('../img/table.jpg') no-repeat center center / cover;
   font-weight: bold;
   box-shadow: 1px 11px 25px 12px $black;
+  display: flex;
 
   &.hidden {
     opacity: 0;
@@ -432,19 +472,27 @@ button.new-game {
   }
 }
 
+.timer-box {
+  @include respond-to(xs) {
+    order: 2;
+    margin: 0 auto;
+  };
+}
+
 .counter-box {
   margin: 20px 0;
 }
 
-.timer-screen {
-
-}
-
 .total-clicks-screen {
-
+  padding: 0 20px;
 }
 
 .timer-screen {
+  width: 250px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   .time-label {
     @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
 
