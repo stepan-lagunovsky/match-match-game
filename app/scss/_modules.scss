@@ -46,6 +46,8 @@ h2 {
 
 button.start-game {
   @extend.buttonStyled;
+
+  width: 100%;
 }
 
 button.new-game {

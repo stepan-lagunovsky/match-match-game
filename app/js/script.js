@@ -49,6 +49,14 @@ listenEvent(document, 'mouseup', () => {
 });
 
 // TIMER
+const timerOptions = {
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  total: 0,
+};
+
 let timeInterval;
 let t = 0;
 
@@ -74,14 +82,22 @@ const initializeClock = (id, endTime) => {
   const secondsSpan = findByQuery('.seconds');
 
   const updateClock = () => {
-    const t = getTimeRemaining(endTime);
+    const remainingTime = getTimeRemaining(endTime);
 
-    daysSpan.innerHTML = t.days;
-    hoursSpan.innerHTML = `0${t.hours}`.slice(-2);
-    minutesSpan.innerHTML = `0${t.minutes}`.slice(-2);
-    secondsSpan.innerHTML = `0${t.seconds}`.slice(-2);
+    daysSpan.innerHTML = remainingTime.days;
+    hoursSpan.innerHTML = `0${remainingTime.hours}`.slice(-2);
+    minutesSpan.innerHTML = `0${remainingTime.minutes}`.slice(-2);
+    secondsSpan.innerHTML = `0${remainingTime.seconds}`.slice(-2);
 
-    if (t.total <= 0) {
+    Object.entries(timerOptions).forEach(([key]) => {
+      timerOptions[key] = remainingTime[key];
+    });
+
+    timerOptions.total = `Min: ${timerOptions.minutes} Sec: ${
+      timerOptions.seconds
+    }`;
+
+    if (remainingTime.total <= 0) {
       clearInterval(timeInterval);
     }
   };
@@ -300,7 +316,7 @@ const checkGameOver = () => {
     findByQuery('.total-clicks-label').textContent = state.totalClicks;
 
     // TODO: Create getTime method
-    findByQuery('.total-time-label').textContent = 'get total time';
+    findByQuery('.total-time-label').textContent = timerOptions.total;
   }
 };
 
