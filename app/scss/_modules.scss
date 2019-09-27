@@ -12,17 +12,10 @@ h2 {
 
 // Buttons
 .buttonStyled {
-  @include respond-to(xs) {
-    width: 100%;
-  };
-
-  @include font-type($schoolBellReg, $brand, 18px, 24px, 0);
-
   background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
   outline: none;
   margin: 0;
   padding: 10px 20px;
-  cursor: pointer;
   transition: all ease-in-out 0.2s;
   cursor: pointer;
   box-shadow: 0 10px 15px 0 rgba(1, 1, 1, 0.5);
@@ -32,6 +25,11 @@ h2 {
   justify-content: center;
   align-items: center;
   min-width: 130px;
+  @include font-type($schoolBellReg, $brand, 18px, 24px, 0);
+
+  @include respond-to(xs) {
+    width: 100%;
+  };
 
   &:disabled {
     opacity: 0.5;
@@ -40,7 +38,7 @@ h2 {
 
   &:hover {
     box-shadow: 0 10px 15px 0 rgba(1, 1, 1, 0.8);
-    opacity: .8;
+    opacity: 0.8;
   }
 }
 
@@ -85,7 +83,7 @@ button.new-game {
   justify-content: center;
   align-items: center;
   opacity: 1;
-  transition: opacity ease-in-out 0.2s;
+  transition: opacity ease-in-out 0.2s, height ease-in-out 0.4s;
 
   &.hidden {
     height: 0;
@@ -302,29 +300,16 @@ button.new-game {
     }
   }
 
-  &.opened {
-    button {
-      opacity: 0.8;
-
-      &::hover {
-        opacity: 1;
-      }
-    }
-
-    .radio-set {
-      display: block;
-      z-index: 1;
-    }
-  }
-
   .radio-set {
+    max-height: 0;
+    overflow-y: hidden;
     background: url('../img/dropdown-background.jpg') top center no-repeat / cover;
-    display: none;
     position: absolute;
     left: 0;
     top: 100%;
     width: 100%;
     box-shadow: 0 23px 30px 0 $black;
+    transition: max-height ease-in-out 0.4s;
 
     input[type='radio'] {
       display: none;
@@ -337,17 +322,17 @@ button.new-game {
         text-transform: uppercase;
         text-align: right;
         font-weight: bolder;
-        transition: all ease-in-out .2s;
+        transition: all ease-in-out 0.4s;
 
         &:hover {
           background: linear-gradient(
               to right,
-              rgba(0, 0, 0, 0) 25%,
-              rgba(0, 0, 0, .43) 89%,
-              rgba(0, 0, 0, .43) 98%,
-              rgba(0, 0, 0, 1) 100%
+            rgba(0, 0, 0, 0) 25%,
+            rgba(0, 0, 0, 0.43) 89%,
+            rgba(0, 0, 0, 0.43) 98%,
+            rgba(0, 0, 0, 1) 100%
           );
-          opacity: .7;
+          opacity: 0.7;
         }
       }
 
@@ -355,11 +340,27 @@ button.new-game {
         background: linear-gradient(
             to right,
             rgba(0, 0, 0, 0) 25%,
-            rgba(0, 0, 0, .63) 89%,
-            rgba(0, 0, 0, .63) 98%,
+            rgba(0, 0, 0, 0.63) 89%,
+            rgba(0, 0, 0, 0.63) 98%,
             rgba(0, 0, 0, 1) 100%
         );
       }
+    }
+  }
+
+  &.opened {
+    button {
+      opacity: 0.8;
+      transition: opacity ease-in-out 0.4s;
+
+      &::hover {
+        opacity: 1;
+      }
+    }
+
+    .radio-set {
+      z-index: 1;
+      max-height: 300px;
     }
   }
 }

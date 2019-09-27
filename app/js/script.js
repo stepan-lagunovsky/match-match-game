@@ -32,14 +32,7 @@ const newGameControls = findByQuery('.new-game-controls');
 const timerBox = findByQuery('.timer-box');
 const counterBox = findByQuery('.counter-box');
 const backDrop = findByQuery('.backdrop');
-
-listenEvent(newGameButton, 'click', () => {
-  window.location.reload();
-});
-
-listenEvent(tryAgainButton, 'click', () => {
-  window.location.reload();
-});
+const loader = findByQuery('.loader');
 
 // Dropdowns
 listenEventAll(dropdowns, 'click', event => {
@@ -50,87 +43,70 @@ listenEvent(document, 'mouseup', () => {
   dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
 });
 
-// Game state
-const state = {
-  cardBack: blueBack,
-  cardsTotal: 10,
-  images: [],
-  maxAllowableClicks: null,
-  totalClicks: 0,
-  totalMatches: 0,
-  time: {
-    days: 1,
-    hours: 0,
-    minutes: 0.25,
-    seconds: 1,
+const EASY = 'EASY';
+const MEDIUM = 'MEDIUM';
+const HARD = 'HARD';
+
+const DIFFICULTIES = {
+  [EASY]: {
+    label: 'Easy',
+    cardsTotal: 10,
+    time: 30,
+  },
+  [MEDIUM]: {
+    label: 'Medium',
+    cardsTotal: 18,
+    time: 120,
+  },
+  [HARD]: {
+    label: 'Hard',
+    cardsTotal: 24,
+    time: 180,
   },
 };
 
-const setGameTime = totalCards => {
-  let difficultyType;
-
-  if (totalCards === '24') {
-    difficultyType = 3 / 60;
-  } else if (totalCards === '18') {
-    difficultyType = 2 / 60;
-  } else {
-    difficultyType = 0.5 / 60;
-  }
-
-  state.time.minutes = difficultyType.toFixed(2);
+// Game state
+const state = {
+  difficulty: EASY,
+  cardsTotal: DIFFICULTIES.EASY.cardsTotal,
+  time: DIFFICULTIES.EASY.time,
+  images: [],
+  cardBack: blueBack,
+  maxAllowableClicks: null,
+  totalClicks: 0,
+  totalMatches: 0,
 };
-
-// Play/pause
-listenEvent(playPause, 'change', event => {
-  const { checked } = event.target;
-  playPauseLabel.textContent = checked ? 'Continue' : 'Pause';
-
-  if (checked) {
-    pauseTimer();
-
-    backDrop.classList.remove('hidden');
-  } else {
-    continueTimer();
-
-    backDrop.classList.add('hidden');
-  }
-});
 
 const setMaxAllowedClicks = totalCards => {
   state.maxAllowableClicks = totalCards * 2 + 10;
   findByQuery('.max-allowed-clicks').innerText = totalCards * 2 + 10;
 };
 
-listenEventAll(cardBackRadio, 'change', event => {
-  const selectedCardBack = event.target.value === 'blue' ? blueBack : redBack;
+listenEventAll(cardBackRadio, 'change', ({ target }) => {
+  const selectedCardBack = target.value === 'blue' ? blueBack : redBack;
   state.cardBack = selectedCardBack;
 
   findByQuery('.dropdown-label-skirt').src = selectedCardBack;
 });
 
-listenEventAll(difficultyRadio, 'change', event => {
-  state.cardsTotal = event.target.value;
+const setGameTime = difficulty => {
+  state.time = DIFFICULTIES[difficulty].time;
+};
 
-  const EASY = 10;
-  const MEDIUM = 18;
-  const HARD = 24;
-
-  const DIFFICULTY_LABELS = {
-    [EASY]: 'Easy',
-    [MEDIUM]: 'Medium',
-    [HARD]: 'Hard',
-  };
+listenEventAll(difficultyRadio, 'change', ({ target }) => {
+  state.cardsTotal = DIFFICULTIES[target.value].cardsTotal;
+  setGameTime(target.value);
 
   findByQuery('.dropdown-label-difficulty').textContent =
-    DIFFICULTY_LABELS[event.target.value];
+    DIFFICULTIES[target.value].label;
 });
 
 const setBoardGrid = total => {
   let colsNumber;
 
-  if (total === '24') {
+  if (total === 24) {
     colsNumber = 8;
-  } else if (total === '18') {
+  } else if (total === 18) {
     colsNumber = 6;
   } else {
     colsNumber = 5;
@@ -139,7 +115,6 @@ const setBoardGrid = total => {
   cardBoard.style.gridTemplateColumns = `repeat(${colsNumber}, 1fr)`;
 };
 
-// Shuffle cards
 const shuffleCards = a => {
   for (let i = a.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -176,8 +151,7 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
-  findByQuery('.loader').style.display = 'flex';
-  setGameTime(state.cardsTotal);
+  loader.style.display = 'flex';
   drawTimer(state.time);
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
@@ -187,11 +161,35 @@ listenEvent(startGameButton, 'click', () => {
   difficultyControls.classList.add('hidden');
   rulesBox.classList.add('hidden');
   setTimeout(() => {
-    findByQuery('.loader').style.display = 'none';
+    loader.style.display = 'none';
     drawCards(state.images);
     timerBox.classList.remove('hidden');
     counterBox.classList.remove('hidden');
   }, 800);
+});
+
+// New game
+listenEvent(newGameButton, 'click', () => {
+  window.location.reload();
+});
+
+// Restart game
+listenEvent(tryAgainButton, 'click', () => {
+  window.location.reload();
+});
+
+// Play/Pause game
+listenEvent(playPause, 'change', ({ target }) => {
+  const { checked } = target;
+  playPauseLabel.textContent = checked ? 'Continue' : 'Pause';
+
+  if (checked) {
+    pauseTimer();
+    backDrop.classList.remove('hidden');
+  } else {
+    continueTimer();
+    backDrop.classList.add('hidden');
+  }
 });
 
 const toggleProgressEmojis = totalClicks => {
@@ -207,18 +205,19 @@ const drawEmojiOnCardClicks = totalClicks => {
   findByQuery('.progress-icon').innerHTML = toggleProgressEmojis(totalClicks);
 };
 
+// Card handlers
+const selectedCard = {
+  id: null,
+  value: null,
+  inUse: false,
+};
+
 const openCard = id => {
   findById(id).classList.add('rotateCardNow');
 };
 
 const closeCard = id => {
   findById(id).classList.remove('rotateCardNow');
-};
-
-const selectedCard = {
-  id: null,
-  value: null,
-  inUse: false,
 };
 
 const insertFirstCard = (id, value) => {
