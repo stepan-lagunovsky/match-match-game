@@ -2,6 +2,7 @@ import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.png';
 import redBack from '../img/cards/back/red_back.png';
 import { cardImages } from './cards';
+import { timerOptions, pauseTimer, continueTimer, startTimer } from './timer';
 
 const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
@@ -24,6 +25,7 @@ const rulesBox = findByQuery('.rules-box');
 const gameOverBox = findByQuery('.game-over-box');
 const startGameButton = findById('startGameButton');
 const newGameButton = findById('newGameButton');
+const tryAgainButton = findById('tryAgainButton');
 const processControls = findByQuery('.process-controls');
 const difficultyControls = findByQuery('.difficulty-controls');
 const newGameControls = findByQuery('.new-game-controls');
@@ -35,7 +37,7 @@ listenEvent(newGameButton, 'click', () => {
   window.location.reload();
 });
 
-listenEvent(findByQuery('.try-again-button'), 'click', () => {
+listenEvent(tryAgainButton, 'click', () => {
   window.location.reload();
 });
 
@@ -47,73 +49,6 @@ listenEventAll(dropdowns, 'click', event => {
 listenEvent(document, 'mouseup', () => {
   dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
 });
-
-// TIMER
-const timerOptions = {
-  days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0,
-  total: 0,
-};
-
-let timeInterval;
-let t = 0;
-
-const getTimeRemaining = endTime => {
-  t = Date.parse(endTime) - Date.parse(new Date());
-  const seconds = Math.floor((t / 1000) % 60);
-  const minutes = Math.floor((t / 1000 / 60) % 60);
-  const hours = Math.floor((t / (1000 * 60 * 60)) % 24);
-  const days = Math.floor(t / (1000 * 60 * 60 * 24));
-  return {
-    total: t,
-    days,
-    hours,
-    minutes,
-    seconds,
-  };
-};
-
-const initializeClock = (id, endTime) => {
-  const daysSpan = findByQuery('.days');
-  const hoursSpan = findByQuery('.hours');
-  const minutesSpan = findByQuery('.minutes');
-  const secondsSpan = findByQuery('.seconds');
-
-  const updateClock = () => {
-    const remainingTime = getTimeRemaining(endTime);
-
-    daysSpan.innerHTML = remainingTime.days;
-    hoursSpan.innerHTML = `0${remainingTime.hours}`.slice(-2);
-    minutesSpan.innerHTML = `0${remainingTime.minutes}`.slice(-2);
-    secondsSpan.innerHTML = `0${remainingTime.seconds}`.slice(-2);
-
-    Object.entries(timerOptions).forEach(([key]) => {
-      timerOptions[key] = remainingTime[key];
-    });
-
-    timerOptions.total = `Min: ${timerOptions.minutes} Sec: ${
-      timerOptions.seconds
-    }`;
-
-    if (remainingTime.total <= 0) {
-      clearInterval(timeInterval);
-    }
-  };
-
-  updateClock();
-  timeInterval = setInterval(updateClock, 1000);
-};
-
-const pauseTimer = () => {
-  clearInterval(timeInterval);
-};
-
-const continueTimer = () => {
-  const continuedDeadLine = new Date(Date.parse(new Date()) + t);
-  initializeClock('timer', continuedDeadLine);
-};
 
 // Game state
 const state = {
@@ -129,15 +64,6 @@ const state = {
     minutes: 0.25,
     seconds: 1,
   },
-};
-
-const startTimer = timeObj => {
-  const deadLine = new Date(
-    Date.parse(new Date()) +
-      timeObj.days * 60 * timeObj.minutes * 60 * timeObj.seconds * 1000
-  );
-
-  initializeClock('timer', deadLine);
 };
 
 const setGameTime = totalCards => {
