@@ -2,7 +2,7 @@ import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.png';
 import redBack from '../img/cards/back/red_back.png';
 import { cardImages } from './cards';
-import { timerOptions, pauseTimer, continueTimer, startTimer } from './timer';
+import { timerOptions, pauseTimer, continueTimer, drawTimer } from './timer';
 
 const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
@@ -69,13 +69,14 @@ const state = {
 const setGameTime = totalCards => {
   let difficultyType;
 
-  if (totalCards === 24) {
+  if (totalCards === '24') {
     difficultyType = 3 / 60;
   } else if (totalCards === '18') {
     difficultyType = 2 / 60;
   } else {
     difficultyType = 0.5 / 60;
   }
+
   state.time.minutes = difficultyType.toFixed(2);
 };
 
@@ -175,8 +176,9 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
+  findByQuery('.loader').style.display = 'flex';
   setGameTime(state.cardsTotal);
-  startTimer(state.time);
+  drawTimer(state.time);
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
@@ -185,20 +187,20 @@ listenEvent(startGameButton, 'click', () => {
   difficultyControls.classList.add('hidden');
   rulesBox.classList.add('hidden');
   setTimeout(() => {
+    findByQuery('.loader').style.display = 'none';
     drawCards(state.images);
     timerBox.classList.remove('hidden');
     counterBox.classList.remove('hidden');
-  }, 400);
+  }, 800);
 });
 
 const toggleProgressEmojis = totalClicks => {
   const GREAT_GAME_EMOJI = '&#x1F60E;';
   const BAD_GAME_EMOJI = '&#x1F622;';
 
-  if (totalClicks <= state.maxAllowableClicks) {
-    return GREAT_GAME_EMOJI;
-  }
-  return BAD_GAME_EMOJI;
+  return totalClicks <= state.maxAllowableClicks
+    ? GREAT_GAME_EMOJI
+    : BAD_GAME_EMOJI;
 };
 
 const drawEmojiOnCardClicks = totalClicks => {
@@ -281,10 +283,11 @@ const cardClickHandler = (id, value) => {
 };
 
 listenEvent(cardBoard, 'click', event => {
-  const cardId = event.target.parentNode.parentNode.parentNode.id;
-  const cardFront = event.target.parentNode.parentNode.parentNode.getAttribute(
-    'data-card-front'
-  );
+  const card = event.target.parentNode.parentNode.parentNode;
+  const cardId = card.id;
+  const cardValue = card.getAttribute('data-card-front');
 
-  cardClickHandler(cardId, cardFront);
+  if (cardValue) {
+    cardClickHandler(cardId, cardValue);
+  }
 });
