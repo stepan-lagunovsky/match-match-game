@@ -2,7 +2,7 @@ import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.webp';
 import redBack from '../img/cards/back/red_back.webp';
 import { cardImages } from './cards';
-import { timerOptions, pauseTimer, continueTimer, drawTimer } from './timer';
+import { redrawTimer, pauseTimer, continueTimer, drawTimer } from './timer';
 
 const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
@@ -273,7 +273,7 @@ const checkGameOver = () => {
     findByQuery('.total-clicks-label').textContent = state.totalClicks;
 
     // TODO: Create getTime method
-    findByQuery('.total-time-label').textContent = timerOptions.total;
+    redrawTimer();
   }
 };
 
