@@ -7,12 +7,21 @@
 <body>
 <!-- Application -->
 <div class="app">
-  <!-- Loader -->
-  <div class="loader hidden">
+  <!-- App loader -->
+  <div id="appLoader" class="app-loader hidden">
     <div class="spinner">
-      <div class="coin">
+      <div class="card-spinner">
+        <div class="card-spinner-skirt card-spinner-front"></div>
+        <div class="card-spinner-skirt card-spinner-back"></div>
+      </div>
+      <div class="loading-title">
+        Loading ...
       </div>
     </div>
+  </div>
+
+  <!-- Game loader -->
+  <div id="gameLoader" class="game-loader hidden">
     <div class="numbers">
       <div class="three">3</div>
       <div class="two">2</div>

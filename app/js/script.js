@@ -15,6 +15,8 @@ const listenEventAll = (targets, eventName, fn) =>
     listenEvent(target, eventName, fn);
   });
 
+const appLoader = findById('appLoader');
+const gameLoader = findById('gameLoader');
 const playPause = findById('playPause');
 const playPauseLabel = findById('playPauseLabel');
 const cardBoard = findById('cardBoard');
@@ -29,10 +31,11 @@ const newGameControls = findByQuery('.new-game-controls');
 const timerBox = findByQuery('.timer-box');
 const counterBox = findByQuery('.counter-box');
 const backDrop = findByQuery('.backdrop');
-const loader = findByQuery('.loader');
 const difficultyRadio = findByName('difficulty');
 const cardBackRadio = findByName('cardBack');
 const dropdowns = findAll('.dropdown');
+
+const APP_LOADING_TIMEOUT = 5500;
 
 // Dropdowns
 listenEventAll(dropdowns, 'click', ({ target }) => {
@@ -158,7 +161,7 @@ listenEvent(startGameButton, 'click', () => {
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
   setTimeout(() => {
-    loader.classList.remove('hidden');
+    gameLoader.classList.remove('hidden');
     rulesBox.classList.add('hidden');
     processControls.classList.remove('hidden');
     difficultyControls.classList.add('hidden');
@@ -168,8 +171,8 @@ listenEvent(startGameButton, 'click', () => {
     drawCards(state.images);
     timerBox.classList.remove('hidden');
     counterBox.classList.remove('hidden');
-    loader.classList.add('hidden');
-  }, 5500);
+    gameLoader.classList.add('hidden');
+  }, APP_LOADING_TIMEOUT);
 });
 
 // New game
@@ -293,4 +296,14 @@ listenEvent(cardBoard, 'click', event => {
   if (cardValue) {
     cardClickHandler(cardId, cardValue);
   }
+});
+
+listenEvent(document, 'DOMContentLoaded', () => {
+  findByQuery('body').style.overflow = 'hidden';
+  appLoader.classList.remove('hidden');
+
+  setTimeout(() => {
+    findByQuery('body').style.overflow = 'auto';
+    appLoader.classList.add('hidden');
+  }, APP_LOADING_TIMEOUT);
 });
