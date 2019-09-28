@@ -1,3 +1,58 @@
+.spinner {
+  display: inline-block;
+  transform: translateZ(1px);
+
+  .coin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 140px;
+    margin: 6px;
+    border-radius: 3px;
+    animation: spin 5.5s infinite;
+    background: rgba(10, 10, 10, 0.6);
+  }
+}
+
+.numbers {
+  display: flex;
+  position: absolute;
+
+  & > div {
+    font-size: 120px;
+    transform: scale(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0;
+    text-transform: uppercase;
+
+    @include font-type($schoolBellReg, $brand, 120px, 120px, 0);
+  }
+}
+
+.three {
+  animation: one 1s;
+  animation-delay: 0.5s;
+}
+
+.two {
+  animation: one 1s;
+  animation-delay: 1.5s;
+}
+
+.one {
+  animation: one 1s;
+  animation-delay: 2.5s;
+}
+
+.go {
+  font-size: 200px;
+  animation: one 2s;
+  animation-delay: 3.5s;
+}
+
 .loader {
   position: fixed;
   width: 100%;
@@ -6,21 +61,35 @@
   z-index: 2;
   align-items: center;
   justify-content: center;
-  display: none;
+  display: flex;
+  opacity: 1;
+  transition: opacity ease-in-out 0.4s;
+
+  &.hidden {
+    opacity: 0;
+    z-index: 0;
+
+    .numbers {
+      display: none;
+    }
+  }
 }
 
-.spinner {
-  display: inline-block;
-  transform: translateZ(1px);
-
-  & > div {
-    display: inline-block;
-    width: 110px;
-    height: 110px;
-    margin: 6px;
-    border-radius: 50%;
-    background: url('../img/dropdown-background.jpg') no-repeat 100% 100%;
-    animation: spin 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+@keyframes one {
+  0% {
+    transform: scale(0);
+    width: 0;
+  }
+  50% {
+    transform: scale(1);
+    width: auto;
+  }
+  99% {
+    transform: scale(0);
+    width: auto;
+  }
+  100% {
+    width: 0;
   }
 }
 

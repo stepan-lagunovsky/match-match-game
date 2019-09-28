@@ -8,8 +8,17 @@
 <!-- Application -->
 <div class="app">
   <!-- Loader -->
-  <div class="loader">
-    <div class="spinner"><div></div></div>
+  <div class="loader hidden">
+    <div class="spinner">
+      <div class="coin">
+      </div>
+    </div>
+    <div class="numbers">
+      <div class="three">3</div>
+      <div class="two">2</div>
+      <div class="one">1</div>
+      <div class="go">go</div>
+    </div>
   </div>
 
   <!-- Header -->
@@ -23,7 +32,7 @@
               <div class="dropdown">
                 <button>Choose Card Skirt
                   <span class="dropdown-label">
-                    <img class="dropdown-label-skirt" src="img/cards/back/blue_back.png">
+                    <img class="dropdown-label-skirt" src="img/cards/back/blue_back.webp">
                   </span>
                 </button>
                 <div class="radio-set">
@@ -31,14 +40,14 @@
                     <input type="radio" checked name="cardBack" value="blue">
                     <span>
                     Blue
-                    <img src="img/cards/back/blue_back.png" width="50px">
+                    <img src="img/cards/back/blue_back.webp" width="50px">
                   </span>
                   </label>
                   <label>
                     <input type="radio" name="cardBack" value="red">
                     <span>
                     Red
-                    <img src="img/cards/back/red_back.png" width="50px">
+                    <img src="img/cards/back/red_back.webp" width="50px">
                   </span>
                   </label>
                 </div>
@@ -53,15 +62,21 @@
                 <div class="radio-set">
                   <label>
                     <input type="radio" checked name="difficulty" value="EASY">
-                    <span>Easy (5x2)</span>
+                    <span>
+                      Easy (5x2)
+                    </span>
                   </label>
                   <label>
                     <input type="radio" name="difficulty" value="MEDIUM">
-                    <span>Medium (6x3)</span>
+                    <span>
+                      Medium (6x3)
+                    </span>
                   </label>
                   <label>
                     <input type="radio" name="difficulty" value="HARD">
-                    <span>Hard (8x3)</span>
+                    <span>
+                      Hard (8x3)
+                    </span>
                   </label>
                 </div>
               </div>
@@ -114,9 +129,13 @@
           <div class="total-clicks-screen">
             Total clicks:
             <span class="total">
-                    <span class="total-clicks">0</span> / <span class="max-allowed-clicks"></span>
-                  </span>
-            <span class="progress-icon">&#x1F60E;</span>
+              <span class="total-clicks">0</span>
+              /
+              <span class="max-allowed-clicks"></span>
+            </span>
+            <span class="progress-icon">
+              &#x1F60E;
+            </span>
           </div>
         </div>
       </div>
@@ -129,30 +148,38 @@
           <h2>Game Requirements</h2>
           <ul>
             <li>
-                <span>
+              <span>
                 When entering the game, the user sees the greeting and short rules of the game.
-                </span>
+              </span>
             </li>
             <li>
-                <span>
+              <span>
                 Player can choose kind of card shirts / number of cards (game difficulty)
-                </span>
+              </span>
             </li>
             <li>
-                <span>
+              <span>
                 After the start, the timer starts;
-                </span>
+              </span>
             </li>
             <li>
-              <span>
-                By clicking on the card - it turns over smoothly,
-              </span>
-              <span>
-                  the matched cards also disappear smoothly,
-              </span>
-              <span>
-                if the pair does not match - both cards are turned over face down
-              </span>
+              <ul>
+                <li>
+                  <span>
+                    By clicking on the card - it turns over smoothly,
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    the matched cards also disappear smoothly,
+                  </span>
+                </li>
+                <li>
+                  <span>
+                    if the pair does not match - both cards are turned over face down
+                  </span>
+                </li>
+              </ul>
             </li>
             <li>
               <span>
@@ -176,10 +203,19 @@
         <div class="description-box">
           <h2 class="congratulation-title">Congratulations !</h2>
 
-          <span>You have finished game with: <span class="total-clicks-label"></span> clicks!</span>
-          <span>Your total time is: <span class="total-time-label"></span></span>
+          <span>
+            You have finished game with:
+            <span class="total-clicks-label"></span>
+            clicks!
+          </span>
+          <span>
+            Your total time is:
+            <span class="total-time-label"></span>
+          </span>
 
-          <button id="tryAgainButton" class="try-again-button">Try again &#10548;</button>
+          <button id="tryAgainButton" class="try-again-button">
+            Try again &#10548;
+          </button>
         </div>
       </div>
     </div>

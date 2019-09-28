@@ -1,6 +1,6 @@
 import '../scss/main.scss';
-import blueBack from '../img/cards/back/blue_back.png';
-import redBack from '../img/cards/back/red_back.png';
+import blueBack from '../img/cards/back/blue_back.webp';
+import redBack from '../img/cards/back/red_back.webp';
 import { cardImages } from './cards';
 import { timerOptions, pauseTimer, continueTimer, drawTimer } from './timer';
 
@@ -15,17 +15,14 @@ const listenEventAll = (targets, eventName, fn) =>
     listenEvent(target, eventName, fn);
   });
 
-const dropdowns = findAll('.dropdown');
 const playPause = findById('playPause');
 const playPauseLabel = findById('playPauseLabel');
-const difficultyRadio = findByName('difficulty');
-const cardBackRadio = findByName('cardBack');
 const cardBoard = findById('cardBoard');
-const rulesBox = findByQuery('.rules-box');
-const gameOverBox = findByQuery('.game-over-box');
 const startGameButton = findById('startGameButton');
 const newGameButton = findById('newGameButton');
 const tryAgainButton = findById('tryAgainButton');
+const rulesBox = findByQuery('.rules-box');
+const gameOverBox = findByQuery('.game-over-box');
 const processControls = findByQuery('.process-controls');
 const difficultyControls = findByQuery('.difficulty-controls');
 const newGameControls = findByQuery('.new-game-controls');
@@ -33,14 +30,19 @@ const timerBox = findByQuery('.timer-box');
 const counterBox = findByQuery('.counter-box');
 const backDrop = findByQuery('.backdrop');
 const loader = findByQuery('.loader');
+const difficultyRadio = findByName('difficulty');
+const cardBackRadio = findByName('cardBack');
+const dropdowns = findAll('.dropdown');
 
 // Dropdowns
-listenEventAll(dropdowns, 'click', event => {
-  event.target.parentNode.classList.toggle('opened');
+listenEventAll(dropdowns, 'click', ({ target }) => {
+  target.parentNode.classList.toggle('opened');
 });
 
-listenEvent(document, 'mouseup', () => {
-  dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
+listenEvent(document, 'mouseup', ({ target }) => {
+  if (!target.parentNode.classList.contains('opened')) {
+    dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
+  }
 });
 
 const EASY = 'EASY';
@@ -151,21 +153,23 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
-  loader.style.display = 'flex';
   drawTimer(state.time);
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
-  newGameControls.classList.add('hidden');
-  processControls.classList.remove('hidden');
-  difficultyControls.classList.add('hidden');
-  rulesBox.classList.add('hidden');
   setTimeout(() => {
-    loader.style.display = 'none';
+    loader.classList.remove('hidden');
+    rulesBox.classList.add('hidden');
+    processControls.classList.remove('hidden');
+    difficultyControls.classList.add('hidden');
+    newGameControls.classList.add('hidden');
+  }, 600);
+  setTimeout(() => {
     drawCards(state.images);
     timerBox.classList.remove('hidden');
     counterBox.classList.remove('hidden');
-  }, 800);
+    loader.classList.add('hidden');
+  }, 5500);
 });
 
 // New game
