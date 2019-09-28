@@ -36,7 +36,7 @@ const cardBackRadio = findByName('cardBack');
 const dropdowns = findAll('.dropdown');
 
 const APP_LOADING_TIMEOUT = 5500;
-const RESTART_GAME_TIMEOUT = 1800;
+const RESTART_GAME_TIMEOUT = 400;
 
 // Dropdowns
 listenEventAll(dropdowns, 'click', ({ target }) => {
@@ -190,10 +190,7 @@ listenEvent(newGameButton, 'click', () => {
 
 // Restart game
 listenEvent(tryAgainButton, 'click', () => {
-  appLoader.classList.remove('hidden');
-  setTimeout(() => {
-    window.location.reload();
-  }, 5000);
+  restartGame(RESTART_GAME_TIMEOUT);
 });
 
 // Play/Pause game
@@ -236,6 +233,19 @@ const openCard = id => {
 
 const closeCard = id => {
   findById(id).classList.remove('rotateCardNow');
+};
+
+const removeMatchedPair = (firstCardId, secondCardId) => {
+  const firstMatched = findById(firstCardId);
+  const secondMatched = findById(secondCardId);
+
+  firstMatched.classList.add('hidden');
+  secondMatched.classList.add('hidden');
+
+  setTimeout(() => {
+    firstMatched.remove();
+    secondMatched.remove();
+  }, 800);
 };
 
 const insertFirstCard = (id, value) => {
@@ -287,8 +297,7 @@ const cardClickHandler = (id, value) => {
     setTimeout(() => {
       if (isCardMatch(value)) {
         ++state.totalMatches;
-        findById(id).remove();
-        findById(selectedCard.id).remove();
+        removeMatchedPair(id, selectedCard.id);
         checkGameOver();
       } else {
         closeCard(selectedCard.id);
