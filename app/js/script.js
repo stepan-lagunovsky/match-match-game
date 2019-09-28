@@ -36,6 +36,7 @@ const cardBackRadio = findByName('cardBack');
 const dropdowns = findAll('.dropdown');
 
 const APP_LOADING_TIMEOUT = 5500;
+const RESTART_GAME_TIMEOUT = 1800;
 
 // Dropdowns
 listenEventAll(dropdowns, 'click', ({ target }) => {
@@ -175,14 +176,24 @@ listenEvent(startGameButton, 'click', () => {
   }, APP_LOADING_TIMEOUT);
 });
 
+const restartGame = timeout => {
+  appLoader.classList.remove('hidden');
+  setTimeout(() => {
+    window.location.reload();
+  }, timeout);
+};
+
 // New game
 listenEvent(newGameButton, 'click', () => {
-  window.location.reload();
+  restartGame(RESTART_GAME_TIMEOUT);
 });
 
 // Restart game
 listenEvent(tryAgainButton, 'click', () => {
-  window.location.reload();
+  appLoader.classList.remove('hidden');
+  setTimeout(() => {
+    window.location.reload();
+  }, 5000);
 });
 
 // Play/Pause game
