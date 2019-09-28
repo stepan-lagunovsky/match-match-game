@@ -55,18 +55,8 @@ const initializeClock = (id, endTime) => {
   timeInterval = setInterval(updateClock, 1000);
 };
 
-export const drawTimer = value => {
-  const timeObj = {
-    days: 1,
-    hours: 0,
-    minutes: value / 3600,
-    seconds: 1,
-  };
-
-  const deadLine = new Date(
-    Date.parse(new Date()) +
-      timeObj.days * 60 * timeObj.minutes * 60 * timeObj.seconds * 1000
-  );
+export const drawTimer = seconds => {
+  const deadLine = new Date(Date.parse(new Date()) + seconds * 1000);
 
   initializeClock('timer', deadLine);
 };

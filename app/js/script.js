@@ -141,12 +141,12 @@ const drawCards = shuffledArray => {
         <div class="card" id="card_${index}" data-card-front='${currentFront}'>
           <div class="card__side card__side--front">
             <div class="card__picture card__picture--front">
-              <img alt class="imageOfTheCard" src="${state.cardBack}"/>
+              <img class="imageOfTheCard" src="${state.cardBack}"/>
             </div>
           </div>
           <div class="card__side card__side--back card__side--back-1">
             <div class="card__picture card__picture--back">
-              <img alt class="imageOfTheCard" src="${currentFront}"/>
+              <img class="imageOfTheCard" src="${currentFront}"/>
             </div>
           </div>
         </div>
@@ -163,10 +163,10 @@ listenEvent(startGameButton, 'click', () => {
   prepareAndSetCards(state.cardsTotal);
   setTimeout(() => {
     gameLoader.classList.remove('hidden');
-    rulesBox.classList.add('hidden');
     processControls.classList.remove('hidden');
-    difficultyControls.classList.add('hidden');
+    rulesBox.classList.add('hidden');
     newGameControls.classList.add('hidden');
+    difficultyControls.classList.add('hidden');
   }, 600);
   setTimeout(() => {
     drawCards(state.images);
@@ -178,6 +178,8 @@ listenEvent(startGameButton, 'click', () => {
 
 const restartGame = timeout => {
   appLoader.classList.remove('hidden');
+  findByQuery('.spinner').style.display = 'none';
+
   setTimeout(() => {
     window.location.reload();
   }, timeout);
