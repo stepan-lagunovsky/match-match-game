@@ -2,9 +2,8 @@ import * as f from './framework';
 import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
 
 import {
-  EASY,
-  MEDIUM,
-  HARD,
+  DIFFICULTIES,
+  DIFFICULTY_PROPERTIES,
   APP_LOADING_TIMEOUT,
   GAME_LOADING_TIMEOUT,
   RESTART_GAME_TIMEOUT,
@@ -45,29 +44,9 @@ f.listenEvent(document, 'mouseup', ({ target }) => {
   }
 });
 
-const DIFFICULTIES = {
-  [EASY]: {
-    label: 'Easy',
-    cardsTotal: 10,
-    time: 60,
-  },
-  [MEDIUM]: {
-    label: 'Medium',
-    cardsTotal: 18,
-    time: 120,
-  },
-  [HARD]: {
-    label: 'Hard',
-    cardsTotal: 24,
-    time: 180,
-  },
-};
-
 // Game state
 const state = {
-  difficulty: EASY,
-  cardsTotal: DIFFICULTIES.EASY.cardsTotal,
-  time: DIFFICULTIES.EASY.time,
+  difficulty: DIFFICULTIES.EASY,
   images: [],
   cardBack: blueBack,
   maxAllowableClicks: null,
@@ -87,16 +66,13 @@ f.listenEventAll(cardBackRadio, 'change', ({ target }) => {
   f.findByQuery('.dropdown-label-skirt').src = selectedCardBack;
 });
 
-const setGameTime = difficulty => {
-  state.time = DIFFICULTIES[difficulty].time;
-};
-
 f.listenEventAll(difficultyRadio, 'change', ({ target }) => {
-  state.cardsTotal = DIFFICULTIES[target.value].cardsTotal;
-  setGameTime(target.value);
+  const selectedDifficulty = target.value;
+
+  state.difficulty = selectedDifficulty;
 
   f.findByQuery('.dropdown-label-difficulty').textContent =
-    DIFFICULTIES[target.value].label;
+    DIFFICULTY_PROPERTIES[selectedDifficulty].label;
 });
 
 const setBoardGrid = total => {
@@ -149,16 +125,21 @@ const drawCards = shuffledArray => {
 
 // Start game
 f.listenEvent(startGameButton, 'click', () => {
-  setMaxAllowedClicks(state.cardsTotal);
-  setBoardGrid(state.cardsTotal);
-  prepareAndSetCards(state.cardsTotal);
+  const { difficulty } = state;
+
+  const totalCards = DIFFICULTY_PROPERTIES[difficulty].cardsTotal;
+  const totalTime = DIFFICULTY_PROPERTIES[difficulty].time;
+
+  setMaxAllowedClicks(totalCards);
+  setBoardGrid(totalCards);
+  prepareAndSetCards(totalCards);
   setTimeout(() => {
     gameLoader.classList.remove('hidden');
     processControls.classList.remove('hidden');
     rulesBox.classList.add('hidden');
     newGameControls.classList.add('hidden');
     difficultyControls.classList.add('hidden');
-    drawTimer(state.time);
+    drawTimer(totalTime);
   }, 600);
   setTimeout(() => {
     drawCards(state.images);
