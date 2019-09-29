@@ -1,58 +1,49 @@
+import * as f from './framework';
+import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
+
+import {
+  EASY,
+  MEDIUM,
+  HARD,
+  APP_LOADING_TIMEOUT,
+  GAME_LOADING_TIMEOUT,
+  RESTART_GAME_TIMEOUT,
+} from './constants';
 import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.webp';
 import redBack from '../img/cards/back/red_back.webp';
 import { cardImages } from './cards';
-import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
 
-const findByQuery = selector => document.querySelector(selector);
-const findAll = selector => document.querySelectorAll(selector);
-const findById = id => document.getElementById(id);
-const findByName = name => document.getElementsByName(name);
-const listenEvent = (target, eventName, fn) =>
-  target.addEventListener(eventName, fn);
-const listenEventAll = (targets, eventName, fn) =>
-  targets.forEach(target => {
-    listenEvent(target, eventName, fn);
-  });
-
-const appLoader = findById('appLoader');
-const gameLoader = findById('gameLoader');
-const playPause = findById('playPause');
-const playPauseLabel = findById('playPauseLabel');
-const cardBoard = findById('cardBoard');
-const startGameButton = findById('startGameButton');
-const newGameButton = findById('newGameButton');
-const tryAgainButton = findById('tryAgainButton');
-const rulesBox = findByQuery('.rules-box');
-const gameOverBox = findByQuery('.game-over-box');
-const processControls = findByQuery('.process-controls');
-const difficultyControls = findByQuery('.difficulty-controls');
-const newGameControls = findByQuery('.new-game-controls');
-const timerBox = findByQuery('.timer-box');
-const counterBox = findByQuery('.counter-box');
-const backDrop = findByQuery('.backdrop');
-const difficultyRadio = findByName('difficulty');
-const cardBackRadio = findByName('cardBack');
-const dropdowns = findAll('.dropdown');
-
-const APP_LOADING_TIMEOUT = 1000;
-const GAME_LOADING_TIMEOUT = 5500;
-const RESTART_GAME_TIMEOUT = 400;
+const appLoader = f.findById('appLoader');
+const gameLoader = f.findById('gameLoader');
+const playPause = f.findById('playPause');
+const playPauseLabel = f.findById('playPauseLabel');
+const cardBoard = f.findById('cardBoard');
+const startGameButton = f.findById('startGameButton');
+const newGameButton = f.findById('newGameButton');
+const tryAgainButton = f.findById('tryAgainButton');
+const rulesBox = f.findByQuery('.rules-box');
+const gameOverBox = f.findByQuery('.game-over-box');
+const processControls = f.findByQuery('.process-controls');
+const difficultyControls = f.findByQuery('.difficulty-controls');
+const newGameControls = f.findByQuery('.new-game-controls');
+const timerBox = f.findByQuery('.timer-box');
+const counterBox = f.findByQuery('.counter-box');
+const backDrop = f.findByQuery('.backdrop');
+const difficultyRadio = f.findByName('difficulty');
+const cardBackRadio = f.findByName('cardBack');
+const dropdowns = f.findAll('.dropdown');
 
 // Dropdowns
-listenEventAll(dropdowns, 'click', ({ target }) => {
+f.listenEventAll(dropdowns, 'click', ({ target }) => {
   target.parentNode.classList.toggle('opened');
 });
 
-listenEvent(document, 'mouseup', ({ target }) => {
+f.listenEvent(document, 'mouseup', ({ target }) => {
   if (!target.parentNode.classList.contains('opened')) {
     dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
   }
 });
-
-const EASY = 'EASY';
-const MEDIUM = 'MEDIUM';
-const HARD = 'HARD';
 
 const DIFFICULTIES = {
   [EASY]: {
@@ -86,25 +77,25 @@ const state = {
 
 const setMaxAllowedClicks = totalCards => {
   state.maxAllowableClicks = totalCards * 2 + 10;
-  findByQuery('.max-allowed-clicks').innerText = totalCards * 2 + 10;
+  f.findByQuery('.max-allowed-clicks').innerText = totalCards * 2 + 10;
 };
 
-listenEventAll(cardBackRadio, 'change', ({ target }) => {
+f.listenEventAll(cardBackRadio, 'change', ({ target }) => {
   const selectedCardBack = target.value === 'blue' ? blueBack : redBack;
   state.cardBack = selectedCardBack;
 
-  findByQuery('.dropdown-label-skirt').src = selectedCardBack;
+  f.findByQuery('.dropdown-label-skirt').src = selectedCardBack;
 });
 
 const setGameTime = difficulty => {
   state.time = DIFFICULTIES[difficulty].time;
 };
 
-listenEventAll(difficultyRadio, 'change', ({ target }) => {
+f.listenEventAll(difficultyRadio, 'change', ({ target }) => {
   state.cardsTotal = DIFFICULTIES[target.value].cardsTotal;
   setGameTime(target.value);
 
-  findByQuery('.dropdown-label-difficulty').textContent =
+  f.findByQuery('.dropdown-label-difficulty').textContent =
     DIFFICULTIES[target.value].label;
 });
 
@@ -157,7 +148,7 @@ const drawCards = shuffledArray => {
 };
 
 // Start game
-listenEvent(startGameButton, 'click', () => {
+f.listenEvent(startGameButton, 'click', () => {
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
@@ -179,7 +170,7 @@ listenEvent(startGameButton, 'click', () => {
 
 const restartGame = timeout => {
   appLoader.classList.remove('hidden');
-  findByQuery('.spinner').style.display = 'none';
+  f.findByQuery('.spinner').style.display = 'none';
 
   setTimeout(() => {
     window.location.reload();
@@ -187,17 +178,17 @@ const restartGame = timeout => {
 };
 
 // New game
-listenEvent(newGameButton, 'click', () => {
+f.listenEvent(newGameButton, 'click', () => {
   restartGame(RESTART_GAME_TIMEOUT);
 });
 
 // Restart game
-listenEvent(tryAgainButton, 'click', () => {
+f.listenEvent(tryAgainButton, 'click', () => {
   restartGame(RESTART_GAME_TIMEOUT);
 });
 
 // Play/Pause game
-listenEvent(playPause, 'change', ({ target }) => {
+f.listenEvent(playPause, 'change', ({ target }) => {
   const { checked } = target;
   playPauseLabel.textContent = checked ? 'Continue' : 'Pause';
 
@@ -220,7 +211,7 @@ const toggleProgressEmojis = totalClicks => {
 };
 
 const drawEmojiOnCardClicks = totalClicks => {
-  findByQuery('.progress-icon').innerHTML = toggleProgressEmojis(totalClicks);
+  f.findByQuery('.progress-icon').innerHTML = toggleProgressEmojis(totalClicks);
 };
 
 // Card handlers
@@ -231,16 +222,16 @@ const selectedCard = {
 };
 
 const openCard = id => {
-  findById(id).classList.add('rotateCardNow');
+  f.findById(id).classList.add('rotateCardNow');
 };
 
 const closeCard = id => {
-  findById(id).classList.remove('rotateCardNow');
+  f.findById(id).classList.remove('rotateCardNow');
 };
 
 const removeMatchedPair = (firstCardId, secondCardId) => {
-  const firstMatched = findById(firstCardId);
-  const secondMatched = findById(secondCardId);
+  const firstMatched = f.findById(firstCardId);
+  const secondMatched = f.findById(secondCardId);
 
   firstMatched.classList.add('hidden');
   secondMatched.classList.add('hidden');
@@ -265,7 +256,7 @@ const resetSelectedCard = () => {
 };
 
 const checkGameOver = () => {
-  const gameOverContent = findById('gameOverContent');
+  const gameOverContent = f.findById('gameOverContent');
   const resultTime =
     timerOptions.minutes !== 0
       ? `${timerOptions.minutes} min ${timerOptions.seconds} sec`
@@ -302,7 +293,7 @@ const checkGameOver = () => {
 const calculateTotalClicks = () => {
   ++state.totalClicks;
 
-  findByQuery('.total-clicks').textContent = state.totalClicks;
+  f.findByQuery('.total-clicks').textContent = state.totalClicks;
 };
 
 const cardClickHandler = (id, value) => {
@@ -332,7 +323,7 @@ const cardClickHandler = (id, value) => {
   }
 };
 
-listenEvent(cardBoard, 'click', event => {
+f.listenEvent(cardBoard, 'click', event => {
   const card = event.target.parentNode.parentNode.parentNode;
   const cardId = card.id;
   const cardValue = card.getAttribute('data-card-front');
@@ -342,12 +333,12 @@ listenEvent(cardBoard, 'click', event => {
   }
 });
 
-listenEvent(document, 'DOMContentLoaded', () => {
-  findByQuery('body').style.overflow = 'hidden';
+f.listenEvent(document, 'DOMContentLoaded', () => {
+  f.findByQuery('body').style.overflow = 'hidden';
   appLoader.classList.remove('hidden');
 
   setTimeout(() => {
-    findByQuery('body').style.overflow = 'auto';
+    f.findByQuery('body').style.overflow = 'auto';
     appLoader.classList.add('hidden');
   }, APP_LOADING_TIMEOUT);
 });

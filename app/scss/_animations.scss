@@ -110,23 +110,23 @@
 }
 
 .three {
-  animation: one 1s;
+  animation: animate-number 1s;
   animation-delay: 0.5s;
 }
 
 .two {
-  animation: one 1s;
+  animation: animate-number 1s;
   animation-delay: 1.5s;
 }
 
 .one {
-  animation: one 1s;
+  animation: animate-number 1s;
   animation-delay: 2.5s;
 }
 
 .go {
   font-size: 200px;
-  animation: one 2s;
+  animation: animate-number 2s;
   animation-delay: 3.5s;
 }
 
@@ -152,7 +152,7 @@
   }
 }
 
-@keyframes one {
+@keyframes animate-number {
   0% {
     transform: scale(0);
     width: 0;

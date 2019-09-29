@@ -1,3 +1,5 @@
+import * as f from './framework';
+
 export const timerOptions = {
   days: 0,
   hours: 0,
@@ -6,10 +8,10 @@ export const timerOptions = {
 };
 
 const redrawTimer = () => {
-  document.querySelector('.days').innerHTML = timerOptions.days;
-  document.querySelector('.hours').innerHTML = timerOptions.hours;
-  document.querySelector('.minutes').innerHTML = `0${timerOptions.minutes}`;
-  document.querySelector('.seconds').innerHTML = `0${timerOptions.seconds}`;
+  f.findByQuery('.days').innerHTML = timerOptions.days;
+  f.findByQuery('.hours').innerHTML = timerOptions.hours;
+  f.findByQuery('.minutes').innerHTML = `0${timerOptions.minutes}`;
+  f.findByQuery('.seconds').innerHTML = `0${timerOptions.seconds}`;
 };
 
 let timeInterval;
