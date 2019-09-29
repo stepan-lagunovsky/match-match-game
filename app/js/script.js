@@ -1,5 +1,6 @@
 import * as f from './framework';
 import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
+import { onClickOutside } from './on-click-outside';
 
 import {
   DIFFICULTIES,
@@ -32,17 +33,6 @@ const backDrop = f.findByQuery('.backdrop');
 const difficultyRadio = f.findByName('difficulty');
 const cardBackRadio = f.findByName('cardBack');
 const dropdowns = f.findAll('.dropdown');
-
-// Dropdowns
-f.listenEventAll(dropdowns, 'click', ({ target }) => {
-  target.parentNode.classList.toggle('opened');
-});
-
-f.listenEvent(document, 'mouseup', ({ target }) => {
-  if (!target.parentNode.classList.contains('opened')) {
-    dropdowns.forEach(dropdown => dropdown.classList.remove('opened'));
-  }
-});
 
 // Game state
 const state = {
@@ -313,6 +303,8 @@ f.listenEvent(cardBoard, 'click', event => {
     cardClickHandler(cardId, cardValue);
   }
 });
+
+onClickOutside(dropdowns);
 
 f.listenEvent(document, 'DOMContentLoaded', () => {
   f.findByQuery('body').style.overflow = 'hidden';
