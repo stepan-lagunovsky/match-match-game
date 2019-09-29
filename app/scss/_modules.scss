@@ -441,6 +441,10 @@ button.new-game {
       &--back {
         transform: rotateY(180deg);
       }
+
+      &--front:hover {
+        opacity: 0.7;
+      }
     }
 
     &.rotateCardNow .card__side--front {
