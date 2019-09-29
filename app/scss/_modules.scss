@@ -247,6 +247,14 @@ button.new-game {
       &.difficulty-controls {
         width: auto;
 
+        .dropdown:first-child {
+          margin-right: 8px;
+
+          @include respond-to(md) {
+            margin-right: 0;
+          };
+        }
+
         @include respond-to(md) {
           width: auto;
         };
