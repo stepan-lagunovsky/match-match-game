@@ -16,7 +16,7 @@ export const DIFFICULTY_PROPERTIES = {
   [EASY]: {
     label: 'Easy',
     cardsTotal: 10,
-    time: 60,
+    time: 30,
   },
   [MEDIUM]: {
     label: 'Medium',

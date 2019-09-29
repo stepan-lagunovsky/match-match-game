@@ -1,6 +1,7 @@
 import * as f from './framework';
 import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
 import { onClickOutside } from './on-click-outside';
+import { convertSecondsToTime, convertTimeToSeconds } from './helpers';
 
 import {
   DIFFICULTIES,
@@ -22,7 +23,7 @@ const cardBoard = f.findById('cardBoard');
 const startGameButton = f.findById('startGameButton');
 const newGameButton = f.findById('newGameButton');
 const tryAgainButton = f.findById('tryAgainButton');
-const rulesBox = f.findByQuery('.rules-box');
+const rulesBox = f.findById('rulesBox');
 const gameOverBox = f.findByQuery('.game-over-box');
 const processControls = f.findByQuery('.process-controls');
 const difficultyControls = f.findByQuery('.difficulty-controls');
@@ -34,7 +35,6 @@ const difficultyRadio = f.findByName('difficulty');
 const cardBackRadio = f.findByName('cardBack');
 const dropdowns = f.findAll('.dropdown');
 
-// Game state
 const state = {
   difficulty: DIFFICULTIES.EASY,
   images: [],
@@ -113,7 +113,6 @@ const drawCards = shuffledArray => {
   });
 };
 
-// Start game
 f.listenEvent(startGameButton, 'click', () => {
   const { difficulty } = state;
 
@@ -148,17 +147,14 @@ const restartGame = timeout => {
   }, timeout);
 };
 
-// New game
 f.listenEvent(newGameButton, 'click', () => {
   restartGame(RESTART_GAME_TIMEOUT);
 });
 
-// Restart game
 f.listenEvent(tryAgainButton, 'click', () => {
   restartGame(RESTART_GAME_TIMEOUT);
 });
 
-// Play/Pause game
 f.listenEvent(playPause, 'change', ({ target }) => {
   const { checked } = target;
   playPauseLabel.textContent = checked ? 'Continue' : 'Pause';
@@ -185,7 +181,6 @@ const drawEmojiOnCardClicks = totalClicks => {
   f.findByQuery('.progress-icon').innerHTML = toggleProgressEmojis(totalClicks);
 };
 
-// Card handlers
 const selectedCard = {
   id: null,
   value: null,
@@ -226,24 +221,47 @@ const resetSelectedCard = () => {
   selectedCard.inUse = false;
 };
 
+const getTotalTime = () => {
+  const defaultTotalSeconds = DIFFICULTY_PROPERTIES[state.difficulty].time;
+
+  const totalSeconds =
+    defaultTotalSeconds -
+    convertTimeToSeconds(timerOptions.minutes, timerOptions.seconds);
+
+  return convertSecondsToTime(totalSeconds);
+};
+
 const checkGameOver = () => {
   const gameOverContent = f.findById('gameOverContent');
-  const resultTime =
-    timerOptions.minutes !== 0
-      ? `${timerOptions.minutes} min ${timerOptions.seconds} sec`
-      : `${timerOptions.seconds} sec`;
+
+  const resultTime = getTotalTime();
+
+  const resultTimeText =
+    resultTime.minutes !== 0
+      ? `${resultTime.minutes} min ${resultTime.seconds} sec`
+      : `${resultTime.seconds} sec`;
 
   const successGameScreen = `
     <h1>Congratulations!</h1>
+    <h2>Game statistics</h2>
     
-    <span>
-      You have finished game with:
-      <span class="total-clicks-label">${state.totalClicks} clicks</span>
-    </span>
-    <span>
-      Your total time is:
-      <span class="total-time-label">${resultTime}</span>
-    </span>
+    <ul>
+      <li>
+        <span>You have finished game with:</span>
+        <span class="total-clicks-label">
+          ${state.totalClicks}
+        </span>
+        <span>of max available</span>
+        <span class="total-clicks-label">
+          ${state.maxAllowableClicks}
+        </span>
+        <span>clicks</span>
+      </li>
+      <li>
+        <span>Your total time is:</span>
+        <span class="total-time-label">${resultTimeText}</span>
+      </li>
+    </ul>
   `;
 
   const failedGameScreen = `
