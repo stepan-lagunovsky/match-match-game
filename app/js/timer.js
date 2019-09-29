@@ -5,21 +5,18 @@ export const timerOptions = {
   seconds: 0,
 };
 
-export const redrawTimer = () => {
+const redrawTimer = () => {
   document.querySelector('.days').innerHTML = timerOptions.days;
   document.querySelector('.hours').innerHTML = timerOptions.hours;
   document.querySelector('.minutes').innerHTML = `0${timerOptions.minutes}`;
   document.querySelector('.seconds').innerHTML = `0${timerOptions.seconds}`;
-  document.querySelector('.total-time-label').textContent = `Min: ${
-    timerOptions.minutes
-  } Sec: ${timerOptions.seconds}`;
 };
 
 let timeInterval;
 let t = 0;
 
-const initializeClock = (id, endTime) => {
-  const updateClock = () => {
+const calculateTime = (id, endTime) => {
+  const updateTimer = () => {
     t = Date.parse(endTime) - Date.parse(new Date());
     timerOptions.days = Math.floor(t / (1000 * 60 * 60 * 24));
     timerOptions.hours = Math.floor((t / (1000 * 60 * 60)) % 24);
@@ -33,14 +30,14 @@ const initializeClock = (id, endTime) => {
     }
   };
 
-  updateClock();
+  updateTimer();
 
-  timeInterval = setInterval(updateClock, 1000);
+  timeInterval = setInterval(updateTimer, 1000);
 };
 
 export const continueTimer = () => {
   const continuedDeadLine = new Date(Date.parse(new Date()) + t);
-  initializeClock('timer', continuedDeadLine);
+  calculateTime('timer', continuedDeadLine);
 };
 
 export const pauseTimer = () => {
@@ -50,5 +47,5 @@ export const pauseTimer = () => {
 export const drawTimer = seconds => {
   const deadLine = new Date(Date.parse(new Date()) + seconds * 1000);
 
-  initializeClock('timer', deadLine);
+  calculateTime('timer', deadLine);
 };

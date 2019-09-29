@@ -2,7 +2,7 @@ import '../scss/main.scss';
 import blueBack from '../img/cards/back/blue_back.webp';
 import redBack from '../img/cards/back/red_back.webp';
 import { cardImages } from './cards';
-import { redrawTimer, pauseTimer, continueTimer, drawTimer } from './timer';
+import { pauseTimer, continueTimer, drawTimer, timerOptions } from './timer';
 
 const findByQuery = selector => document.querySelector(selector);
 const findAll = selector => document.querySelectorAll(selector);
@@ -35,7 +35,8 @@ const difficultyRadio = findByName('difficulty');
 const cardBackRadio = findByName('cardBack');
 const dropdowns = findAll('.dropdown');
 
-const APP_LOADING_TIMEOUT = 5500;
+const APP_LOADING_TIMEOUT = 1000;
+const GAME_LOADING_TIMEOUT = 5500;
 const RESTART_GAME_TIMEOUT = 400;
 
 // Dropdowns
@@ -57,7 +58,7 @@ const DIFFICULTIES = {
   [EASY]: {
     label: 'Easy',
     cardsTotal: 10,
-    time: 30,
+    time: 60,
   },
   [MEDIUM]: {
     label: 'Medium',
@@ -157,7 +158,6 @@ const drawCards = shuffledArray => {
 
 // Start game
 listenEvent(startGameButton, 'click', () => {
-  drawTimer(state.time);
   setMaxAllowedClicks(state.cardsTotal);
   setBoardGrid(state.cardsTotal);
   prepareAndSetCards(state.cardsTotal);
@@ -167,13 +167,14 @@ listenEvent(startGameButton, 'click', () => {
     rulesBox.classList.add('hidden');
     newGameControls.classList.add('hidden');
     difficultyControls.classList.add('hidden');
+    drawTimer(state.time);
   }, 600);
   setTimeout(() => {
     drawCards(state.images);
     timerBox.classList.remove('hidden');
     counterBox.classList.remove('hidden');
     gameLoader.classList.add('hidden');
-  }, APP_LOADING_TIMEOUT);
+  }, GAME_LOADING_TIMEOUT);
 });
 
 const restartGame = timeout => {
@@ -264,16 +265,37 @@ const resetSelectedCard = () => {
 };
 
 const checkGameOver = () => {
+  const gameOverContent = findById('gameOverContent');
+  const resultTime =
+    timerOptions.minutes !== 0
+      ? `${timerOptions.minutes} min ${timerOptions.seconds} sec`
+      : `${timerOptions.seconds} sec`;
+
+  const successGameScreen = `
+    <h1>Congratulations!</h1>
+    
+    <span>
+      You have finished game with:
+      <span class="total-clicks-label">${state.totalClicks} clicks</span>
+    </span>
+    <span>
+      Your total time is:
+      <span class="total-time-label">${resultTime}</span>
+    </span>
+  `;
+
+  const failedGameScreen = `
+    <h1>You loose!</h1>
+    <span>Time is over...</span>
+  `;
+
   if (state.images.length / 2 === state.totalMatches) {
+    pauseTimer();
     gameOverBox.classList.remove('hidden');
     timerBox.classList.add('hidden');
     counterBox.classList.add('hidden');
-    pauseTimer();
-
-    findByQuery('.total-clicks-label').textContent = state.totalClicks;
-
-    // TODO: Create getTime method
-    redrawTimer();
+    gameOverContent.innerHTML =
+      timerOptions.seconds === 0 ? failedGameScreen : successGameScreen;
   }
 };
 

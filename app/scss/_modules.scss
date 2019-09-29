@@ -227,6 +227,11 @@ button.new-game {
   .description-box {
     justify-content: center;
   }
+
+  .game-over-screen-content {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .navigation {
