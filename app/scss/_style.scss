@@ -1,23 +1,5 @@
 body {
-  & {
-    scrollbar-color: $brand $black;
-  }
-
-  &::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 6px $black;
-    background-color: $black;
-  }
-
-  &::-webkit-scrollbar {
-    width: 4px;
-    background-color: $black;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: $brand;
-    border: 2px solid $brand;
-    border-radius: 4px;
-  }
+  @extend .scrollbar;
 }
 
 .app {
