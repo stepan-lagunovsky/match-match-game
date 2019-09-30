@@ -29,15 +29,15 @@
     }
 
     .card-spinner-front {
-      background: url('../img/cards/back/red_back.webp') top center no-repeat /
-        cover;
+      background: url('../img/cards/back/red_back.webp') top center no-repeat;
+      background-size: cover;
       transform: rotateY(3600deg);
       animation: spin-skirt-front 5.5s infinite;
     }
 
     .card-spinner-back {
-      background: url('../img/cards/back/blue_back.webp') top center no-repeat /
-        cover;
+      background: url('../img/cards/back/blue_back.webp') top center no-repeat;
+      background-size: cover;
       animation: spin-skirt-back 5.5s infinite;
     }
   }

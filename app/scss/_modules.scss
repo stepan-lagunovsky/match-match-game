@@ -12,7 +12,7 @@ h2 {
 
 // Buttons
 .buttonStyled {
-  background: url('../img/dropdown-background.webp') no-repeat 100% 100%;
+  background: url('../img/dropdown-background.webp') 100% 100% no-repeat;
   outline: none;
   margin: 0;
   padding: 10px 20px;
@@ -111,10 +111,36 @@ button.new-game {
     flex-direction: column;
     overflow: hidden;
     transition: max-height ease-in-out 0.4s;
-    max-height: 100vh;
     border: 2px solid $black;
     background: rgba(1, 1, 1, 0.8);
     box-shadow: 0 33px 40px 0 $black;
+    max-height: 80vh;
+    overflow-y: auto;
+
+    & {
+      scrollbar-color: $brand $black;
+    }
+
+    &::-webkit-scrollbar-track {
+      box-shadow: inset 0 0 6px $black;
+      background-color: $black;
+    }
+
+    &::-webkit-scrollbar {
+      width: 4px;
+      background-color: $black;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $brand;
+      border: 2px solid $brand;
+      border-radius: 4px;
+    }
+
+    @include respond-to(sm) {
+      max-height: 60vh;
+    };
+
 
     &.hidden {
       max-height: 0;
@@ -147,7 +173,7 @@ button.new-game {
 
     &.total-time-label,
     &.total-clicks-label {
-      @include font-type($schoolBellReg, $brand, 36px, 42px, 0);
+      @include font-type($schoolBellReg, $brand, 36px, 36px, 0);
 
       font-weight: bold;
       margin: 0 20px;
@@ -318,7 +344,8 @@ button.new-game {
   .radio-set {
     max-height: 0;
     overflow-y: hidden;
-    background: url('../img/dropdown-background.webp') top center no-repeat / cover;
+    background: url('../img/dropdown-background.webp') top center no-repeat;
+    background-size: cover;
     position: absolute;
     left: 0;
     top: 100%;
@@ -410,7 +437,8 @@ button.new-game {
     display: grid;
     grid-gap: 20px 20px;
     transform: rotateX(50deg) skew(1deg);
-    background: url('../img/table.jpg') no-repeat center center / cover;
+    background: url('../img/table.jpg') center center no-repeat;
+    background-size: cover;
     padding: 50px;
     box-shadow: 0 23px 30px 0 $black;
     align-items: center;
@@ -496,7 +524,8 @@ button.new-game {
   transition: all ease-in-out 0.4s;
   border: 2px solid $brand;
   border-radius: 6px;
-  background: url('../img/table.jpg') no-repeat center center / cover;
+  background: url('../img/table.jpg') center center no-repeat;
+  background-size: cover;
   font-weight: bold;
   box-shadow: 1px 11px 25px 12px $black;
   display: flex;
@@ -523,17 +552,23 @@ button.new-game {
 }
 
 .timer-screen {
-  width: 250px;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
-  justify-content: center;
+  padding: 0 25px;
+  grid-column-gap: 10px;
+
   .time-label {
     @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
+    display: flex;
+    justify-content: center;
 
     .minutes,
     .seconds {
       @include font-type($schoolBellReg, $light, 24px, 28px, 5px);
+      width: 25px;
+      display: inline-block;
+      text-align: center;
     }
 
     &.hidden {
@@ -543,6 +578,8 @@ button.new-game {
 }
 
 .total-clicks-screen {
+  display: flex;
+  align-items: center;
   @include font-type($schoolBellReg, $brand, 24px, 28px, 5px);
 
   .total {

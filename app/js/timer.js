@@ -6,8 +6,8 @@ export const timerOptions = {
 };
 
 const redrawTimer = () => {
-  f.findByQuery('.minutes').innerHTML = `0${timerOptions.minutes}`;
-  f.findByQuery('.seconds').innerHTML = `0${timerOptions.seconds}`;
+  f.findByQuery('.minutes').innerHTML = `${timerOptions.minutes}`;
+  f.findByQuery('.seconds').innerHTML = `${timerOptions.seconds}`;
 };
 
 let timeInterval;
