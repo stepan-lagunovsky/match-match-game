@@ -10,7 +10,6 @@ h2 {
   margin-bottom: 20px;
 }
 
-// Buttons
 .buttonStyled {
   background: url('../img/dropdown-background.webp') 100% 100% no-repeat;
   outline: none;
@@ -24,7 +23,8 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 130px;
+  box-sizing: border-box;
+  min-width: 120px;
   @include font-type($schoolBellReg, $brand, 18px, 24px, 0);
 
   @include respond-to(xs) {
@@ -49,17 +49,12 @@ h2 {
 
 button.start-game {
   @extend.buttonStyled;
-
-  width: 100%;
 }
 
 button.new-game {
   @extend.buttonStyled;
-
-  width: 150px;
 }
 
-// Inputs
 .play-pause-checkbox {
   z-index: 2;
 
@@ -68,8 +63,6 @@ button.new-game {
 
     & + label {
       @extend.buttonStyled;
-
-      width: 150px;
     }
   }
 }
@@ -270,6 +263,10 @@ button.new-game {
       &.new-game-controls {
         width: 200px;
 
+        button {
+          width: 100%;
+        }
+
         @include respond-to(xs) {
           width: 100%;
         };
@@ -375,7 +372,7 @@ button.new-game {
       opacity: 0.8;
       transition: opacity ease-in-out 0.4s;
 
-      &::hover {
+      &:hover {
         opacity: 1;
       }
     }
