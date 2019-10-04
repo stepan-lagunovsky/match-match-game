@@ -33,7 +33,10 @@ const calculateTime = (id, endTime) => {
 
 export const continueTimer = () => {
   const continuedDeadLine = new Date(Date.parse(new Date()) + t);
-  calculateTime('timer', continuedDeadLine);
+
+  if (timerOptions.seconds > 0) {
+    calculateTime('timer', continuedDeadLine);
+  }
 };
 
 export const pauseTimer = () => {

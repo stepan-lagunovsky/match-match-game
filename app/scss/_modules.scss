@@ -51,12 +51,17 @@ button.start-game {
   @extend.buttonStyled;
 }
 
-button.new-game {
-  @extend.buttonStyled;
-}
-
 .play-pause-checkbox {
+  position: relative;
   z-index: 2;
+
+  @include respond-to(sm) {
+    margin-bottom: 10px;
+  }
+
+  @include respond-to(xs) {
+    width: 100%;
+  }
 
   input[type="checkbox"] {
     display: none;
@@ -227,95 +232,80 @@ button.new-game {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  padding: 0 25px;
+  box-sizing: border-box;
+}
 
-  .controls {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    width: 100%;
+.controls {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 350px 350px 1fr;
+  width: 100%;
 
-    .control-item {
-      margin: 0 20px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
+  @include respond-to(md) {
+    grid-template-columns: 260px 260px 1fr;
+  }
 
-      &.hidden {
-        display: none;
-      }
+  @include respond-to(sm) {
+    grid-template-columns: 1fr;
+  }
 
-      &.difficulty-controls {
-        width: auto;
+  .start-game {
+    width: 150px;
+    margin-left: auto;
 
-        .dropdown:first-child {
-          margin-right: 8px;
+    @include respond-to(sm) {
+      width: 100%;
+    }
+  }
 
-          @include respond-to(md) {
-            margin-right: 0;
-          };
-        }
+  &.hidden {
+    display: none;
+  }
+}
 
-        @include respond-to(md) {
-          width: auto;
-        };
-      }
+.process-controls {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  grid-gap: 10px;
+  width: 100%;
 
-      &.new-game-controls {
-        width: 200px;
+  &.hidden {
+    display: none;
+  }
 
-        button {
-          width: 100%;
-        }
-
-        @include respond-to(xs) {
-          width: 100%;
-        };
-      }
-
-      &.process-controls {
-        width: 100%;
-
-        button {
-          max-width: 350px;
-        }
-      }
+  button {
+    @include respond-to(sm) {
+      margin-bottom: 10px;
     }
   }
 }
 
+button.new-game {
+  @extend.buttonStyled;
+}
+
 .dropdown {
-  width: 350px;
   display: flex;
   flex-direction: column;
   position: relative;
 
-  @include respond-to(lg) {
-    width: 300px;
-  };
-
-  @include respond-to(md) {
-    width: 220px;
-  };
-
-  @include respond-to(xs) {
-    width: 100%;
-  };
-
   button {
     @extend.buttonStyled;
+  }
 
-    .dropdown-label {
-      @include font-type($schoolBellReg, $brand, 18px, 24px, 1px);
+  .dropdown-label {
+    @include font-type($schoolBellReg, $brand, 18px, 24px, 1px);
 
-      display: flex;
-      align-items: center;
-      font-weight: bold;
-      height: 25px;
-      margin-left: auto;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    height: 25px;
+    margin-left: auto;
 
-      img {
-        height: 100%;
-      }
+    img {
+      height: 100%;
     }
   }
 
@@ -381,21 +371,6 @@ button.new-game {
       z-index: 1;
       max-height: 300px;
     }
-  }
-}
-
-.asd {
-  position: relative;
-  width: 80%;
-  margin: 0 auto;
-
-  .content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: red;
   }
 }
 
@@ -515,9 +490,15 @@ button.new-game {
 }
 
 .timer-box {
-  @include respond-to(xs) {
+  @include respond-to(sm) {
+    width: 100%;
     order: 2;
     margin: 0 auto;
+
+    .timer-screen {
+      width: 250px;
+      margin: 0 auto;
+    }
   };
 }
 

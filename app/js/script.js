@@ -26,8 +26,7 @@ const tryAgainButton = f.findById('tryAgainButton');
 const rulesBox = f.findById('rulesBox');
 const gameOverBox = f.findByQuery('.game-over-box');
 const processControls = f.findByQuery('.process-controls');
-const difficultyControls = f.findByQuery('.difficulty-controls');
-const newGameControls = f.findByQuery('.new-game-controls');
+const controls = f.findByQuery('.controls');
 const timerBox = f.findByQuery('.timer-box');
 const counterBox = f.findByQuery('.counter-box');
 const backDrop = f.findByQuery('.backdrop');
@@ -126,8 +125,7 @@ f.listenEvent(startGameButton, 'click', () => {
     gameLoader.classList.remove('hidden');
     processControls.classList.remove('hidden');
     rulesBox.classList.add('hidden');
-    newGameControls.classList.add('hidden');
-    difficultyControls.classList.add('hidden');
+    controls.classList.add('hidden');
     drawTimer(totalTime);
   }, 600);
   setTimeout(() => {

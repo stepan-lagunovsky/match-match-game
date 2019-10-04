@@ -37,88 +37,84 @@
         <!-- Navigation -->
         <div class="navigation">
           <div class="controls">
-            <div class="control-item difficulty-controls">
-              <div class="dropdown">
-                <button>Choose Card Skirt
-                  <span class="dropdown-label">
-                    <img class="dropdown-label-skirt" src="img/cards/back/blue_back.webp">
-                  </span>
-                </button>
-                <div class="radio-set">
-                  <label>
-                    <input type="radio" checked name="cardBack" value="blue">
-                    <span>
-                    Blue
-                    <img src="img/cards/back/blue_back.webp" width="50px">
-                  </span>
-                  </label>
-                  <label>
-                    <input type="radio" name="cardBack" value="red">
-                    <span>
-                    Red
-                    <img src="img/cards/back/red_back.webp" width="50px">
-                  </span>
-                  </label>
-                </div>
-              </div>
-              <div class="dropdown">
-                <button>
-                  Choose Difficulty
-                  <span class="dropdown-label dropdown-label-difficulty">
-                  Easy
+            <div class="dropdown">
+              <button>Choose Card Skirt
+                <span class="dropdown-label">
+                  <img class="dropdown-label-skirt" src="img/cards/back/blue_back.webp">
                 </span>
-                </button>
-                <div class="radio-set">
-                  <label>
-                    <input type="radio" checked name="difficulty" value="EASY">
-                    <span>
-                      Easy (5x2)
-                    </span>
-                  </label>
-                  <label>
-                    <input type="radio" name="difficulty" value="MEDIUM">
-                    <span>
-                      Medium (6x3)
-                    </span>
-                  </label>
-                  <label>
-                    <input type="radio" name="difficulty" value="HARD">
-                    <span>
-                      Hard (8x3)
-                    </span>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="control-item new-game-controls">
-              <button id="startGameButton" class="start-game">
-                Start Game
               </button>
-            </div>
-            <div class="control-item process-controls hidden">
-              <div class="play-pause-checkbox">
-                <input id="playPause" type="checkbox">
-                <label id="playPauseLabel" for="playPause">Pause</label>
+              <div class="radio-set">
+                <label>
+                  <input type="radio" checked name="cardBack" value="blue">
+                  <span>
+                  Blue
+                  <img src="img/cards/back/blue_back.webp" width="50px">
+                </span>
+                </label>
+                <label>
+                  <input type="radio" name="cardBack" value="red">
+                  <span>
+                  Red
+                  <img src="img/cards/back/red_back.webp" width="50px">
+                </span>
+                </label>
               </div>
+            </div>
+            <div class="dropdown">
+              <button>
+                Choose Difficulty
+                <span class="dropdown-label dropdown-label-difficulty">
+                Easy
+              </span>
+              </button>
+              <div class="radio-set">
+                <label>
+                  <input type="radio" checked name="difficulty" value="EASY">
+                  <span>
+                    Easy (5x2)
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="difficulty" value="MEDIUM">
+                  <span>
+                    Medium (6x3)
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="difficulty" value="HARD">
+                  <span>
+                    Hard (8x3)
+                  </span>
+                </label>
+              </div>
+            </div>
+            <button id="startGameButton" class="start-game">
+              Start Game
+            </button>
+          </div>
+          <div class="process-controls hidden">
+            <div class="play-pause-checkbox">
+              <input id="playPause" type="checkbox">
+              <label id="playPauseLabel" for="playPause">Pause</label>
+            </div>
 
-              <div class="timer-box hidden">
-                <div id="timer" class="timer-screen">
-                  <div class="time-label">
-                    Min:
-                    <span class="minutes"></span>
-                  </div>
-                  <div class="time-label">
-                    Sec:
-                    <span class="seconds"></span>
-                  </div>
+            <div class="timer-box hidden">
+              <div id="timer" class="timer-screen">
+                <div class="time-label">
+                  Min:
+                  <span class="minutes"></span>
+                </div>
+                <div class="time-label">
+                  Sec:
+                  <span class="seconds"></span>
                 </div>
               </div>
+            </div>
 
-              <button id="newGameButton" class="new-game">New Game</button>
-              <!-- Backdrop -->
-              <div class="backdrop hidden">
-                Paused ;)
-              </div>
+            <button id="newGameButton" class="new-game">New Game</button>
+            <!-- Backdrop -->
+            <div class="backdrop hidden">
+              Paused ;)
             </div>
           </div>
         </div>
