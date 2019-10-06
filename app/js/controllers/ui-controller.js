@@ -106,5 +106,22 @@ export const UIController = (() => {
         `;
       });
     },
+    setGridLayout: columnsLength => {
+      DOMElements.cardBoard.style.gridTemplateColumns = columnsLength;
+    },
+    drawMaxAvailableClicks: maxAllowableClicks => {
+      DOMElements.maxAllowedClicksLabel.innerText = maxAllowableClicks;
+    },
+    toggleControlsOnGameStart: () => {
+      DOMElements.gameLoader.classList.remove('hidden');
+      DOMElements.processControls.classList.remove('hidden');
+      DOMElements.rulesBox.classList.add('hidden');
+      DOMElements.controls.classList.add('hidden');
+    },
+    toggleControlsOnLevelLoading: () => {
+      DOMElements.timerBox.classList.remove('hidden');
+      DOMElements.counterBox.classList.remove('hidden');
+      DOMElements.gameLoader.classList.add('hidden');
+    },
   };
 })();

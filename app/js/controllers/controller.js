@@ -68,21 +68,17 @@ export const controller = ((gameCtrl, UICtrl) => {
     gameCtrl.setMaxAllowedClicks();
 
     const TOTAL_TIME = DIFFICULTY_PROPERTIES[state.difficulty].time;
+    const gridColumnsLength = gameCtrl.getTableGridColumnsNumber();
 
     setTimeout(() => {
-      DOM.maxAllowedClicksLabel.innerText = state.maxAllowableClicks;
-      DOM.cardBoard.style.gridTemplateColumns = gameCtrl.getTableGridColumnsNumber();
-      DOM.gameLoader.classList.remove('hidden');
-      DOM.processControls.classList.remove('hidden');
-      DOM.rulesBox.classList.add('hidden');
-      DOM.controls.classList.add('hidden');
+      UICtrl.drawMaxAvailableClicks(state.maxAllowableClicks);
+      UICtrl.setGridLayout(gridColumnsLength);
+      UICtrl.toggleControlsOnGameStart();
     }, TOGGLE_NAVIGATION_TIMEOUT);
     setTimeout(() => {
       initTimer(TOTAL_TIME);
       UICtrl.drawCards(state.images, state.cardBack);
-      DOM.timerBox.classList.remove('hidden');
-      DOM.counterBox.classList.remove('hidden');
-      DOM.gameLoader.classList.add('hidden');
+      UICtrl.toggleControlsOnLevelLoading();
     }, GAME_LOADING_TIMEOUT);
   };
 
