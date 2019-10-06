@@ -5,11 +5,6 @@ export const timerOptions = {
   seconds: 0,
 };
 
-const redrawTimer = () => {
-  f.findByQuery('.minutes').innerHTML = `${timerOptions.minutes}`;
-  f.findByQuery('.seconds').innerHTML = `${timerOptions.seconds}`;
-};
-
 let timeInterval;
 let t = 0;
 
@@ -19,7 +14,8 @@ const calculateTime = (id, endTime) => {
     timerOptions.minutes = Math.floor((t / 1000 / 60) % 60);
     timerOptions.seconds = Math.floor((t / 1000) % 60);
 
-    redrawTimer();
+    f.findByQuery('.minutes').innerHTML = `${timerOptions.minutes}`;
+    f.findByQuery('.seconds').innerHTML = `${timerOptions.seconds}`;
 
     if (t === 0) {
       clearInterval(timeInterval);
@@ -43,7 +39,7 @@ export const pauseTimer = () => {
   clearInterval(timeInterval);
 };
 
-export const drawTimer = seconds => {
+export const initTimer = seconds => {
   const deadLine = new Date(Date.parse(new Date()) + seconds * 1000);
 
   calculateTime('timer', deadLine);

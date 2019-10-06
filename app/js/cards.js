@@ -11,7 +11,7 @@ import frontTen from '../img/cards/front/front_9.png';
 import frontEleven from '../img/cards/front/front_10.png';
 import frontTwelve from '../img/cards/front/front_11.png';
 
-export const cardImages = [
+export const CARD_IMAGES = [
   frontOne,
   frontTwo,
   frontThree,
