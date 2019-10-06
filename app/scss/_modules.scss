@@ -303,6 +303,7 @@ button.new-game {
     font-weight: bold;
     height: 25px;
     margin-left: auto;
+    pointer-events: none;
 
     img {
       height: 100%;
